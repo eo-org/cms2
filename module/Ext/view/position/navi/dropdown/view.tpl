@@ -6,7 +6,7 @@
 {% endif %}
 <ul>
 {% for node in naviDoc.naviIndex %}
-	{{ item.loop(node) }}
+	{{ item.loop(node, trailIds) }}
 {% endfor %}
 </ul>
 <div class='clear'></div>
