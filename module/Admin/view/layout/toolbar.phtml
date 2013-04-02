@@ -1,0 +1,30 @@
+<div class='toolbar'>
+	<div class='main'>
+		<ul class='left'>
+			<?php foreach($this->toolbar as $node) { if(isset($node['children'])) { ?>
+			<li class='root'>
+				<a class='root' href='<?php echo $node['url']?>'>
+					<div class='text'><?php echo $node['title'] ?></div>
+					<div class='mini-icon-bg mini-icon-arrowdown arrow'></div>
+					<div class='clear'></div>
+				</a>
+				<ul class='child'>
+				<?php foreach($node['children'] as $childNode) { ?>
+		    		<li><a href='<?php echo $childNode['url']?>' ><?php echo $childNode['title']?></a></li>
+		    	<?php } ?>
+				</ul>
+		    </li>
+			<?php } else { ?>
+			<li class='root'>
+				<a class='root parent' href='<?php echo str_replace("{{remoteSiteId}}", $this->remoteSiteId, $node['url'])?>'>
+					<div class='text'><?php echo $node['title'] ?></div>
+					<div class='clear'></div>
+				</a>
+			</li>
+			<?php }} ?>
+		</ul>
+	</div>
+	<div class='sub'>
+	
+	</div>
+</div>

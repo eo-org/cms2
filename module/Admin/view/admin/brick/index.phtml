@@ -1,0 +1,38 @@
+<table class='datalist'>
+	<thead class='datalist-head'>
+		<tr class='title-row'>
+			<th class='s-index' s-index='extName' style='width: 485px;'>模块名</th>
+			<th class='s-index' s-index='brickName' style='width: 485px;'>模块名</th>
+			<th></th>
+		</tr>
+		<tr class='search-row'>
+			<th><input class='q-index' q-index='extName' type='text' name='' value='' /></th>
+			<th><input class='q-index' q-index='brickName' type='text' name='' value='' /></th>
+			<th><div class='query-invoker' class='button'>Search</div></th>
+		</tr>
+	</thead>
+	<tbody class='datalist-body'>
+	</tbody>
+	<tfoot class='datalist-foot'>
+		<tr><td id='datalist-paginator' colspan='3'>
+		</td></tr>
+	</tfoot>
+</table>
+
+<script>
+	window.restUrl = '/adminrest/adminrest-brick.json'
+</script>
+
+<script type='text/template' id='data-row'>
+<td>
+	{{data.extName}}
+</td>
+<td>
+	{{data.brickName}}
+</td>
+<td>
+	<a href='/admin/brick/edit/id/{{data.id}}'>编辑</a>
+</td>
+</script>
+
+<script data-main="<?=$this->siteConfig('extUrl')?>/app/dataV4" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>

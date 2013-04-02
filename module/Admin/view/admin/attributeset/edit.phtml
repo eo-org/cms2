@@ -1,0 +1,150 @@
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/attributeset-editor.css'); ?>
+<?php //$this->headScript()->appendFile($this->siteConfig('libUrl').'/admin/script/attributeset-editor.js');?>
+
+<div class='attribute-list' attributesetId ='<?php echo $this->entityId?>'>
+	<div class='attribute-library'>
+		<div class='attribute-library-item' attribute-type='text' label='输入框'>
+			输入框
+		</div>
+		<!--div class='attribute-library-item' attribute-type='radio' label='单选按钮'>
+			单选按钮
+		</div-->
+		<div class='attribute-library-item' attribute-type='select' label='单选下拉框'>
+			单选下拉框
+		</div>
+		<div class='attribute-library-item' attribute-type='brand' label='商标/品牌'>
+			商标/品牌
+		</div>
+		<!--div class='attribute-library-item' attribute-type='multicheckbox' label='多选框'>
+			多选框
+		</div>
+		<div class='attribute-library-item' attribute-type='textarea' label='文本域'>
+			文本域
+		</div>
+		<div class='attribute-library-item' attribute-type='button' label='提交按钮'>
+			提交按钮
+		</div>
+		<div class='attribute-library-item' attribute-type='label' label='文字信息'>
+			文字信息
+		</div-->
+	</div>
+	
+	<div class='attribute-current' style='min-height: 350px;'>
+	</div>
+	
+	<div id='attribute-editor'>
+		
+	</div>
+	
+	<div class='save-sort'>保存排序</div>
+	
+	<div class='clear'></div>
+</div>
+<script>
+var attributeset = {id: '<?php echo $this->id?>'};
+</script>
+
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/attributeset" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+
+<script type='text/template' id='attribute-editor-template'>
+	<dl>
+	<dt>UUID</dt>
+	<dd><input class='attribute-field' type="text" name="UUID" value="{{ UUID }}" /></dd>
+	<dt>CODE</dt>
+	<dd><input class='attribute-field' type="text" name="code" value="{{ code }}" /></dd>
+	<dt>标题</dt>
+	<dd><input class='attribute-field' type="text" name="label" value="{{ label }}" /></dd>
+	<hr />
+<%
+if(type == 'radio' || type == 'select' || type == 'multicheckbox') {
+%>
+	<dt>候选项：</dt>
+	<dd>
+	<ul class='option-container'>
+<%
+	for(idx in options) {
+%>
+		<li class='option-item'>
+			code <input class='attribute-field' type='text' group-tag='option' name='code' value='{{ idx }}' />
+			label <input class='attribute-field' type='text' group-tag='option' name='label' value='{{ options[idx] }}' />
+			<span class='option-remove op-remove'>-</span>
+		</li>
+<%
+	}
+%>
+	</ul>
+	<span class='option-add op-add'>新增候选项</span>
+	</dd>
+<%
+}
+%>
+	<dt>描述</dt>
+	<dd><textarea class='attribute-field' name="description">{{ description }}</textarea></dd>
+	</dl>
+	<div class='attribute-save'>SAVE</div>
+	<div class='attribute-delete'>DELETE</div>
+</script>
+
+<script type='text/template' id='attribute-template'>
+		<div class='element-label'>
+			<a class='lightbox-trigger' attribute-id='{{ id }}' href='#'>{{ label }}</a>
+		</div>
+		<div class='element'>
+<%
+switch(type) {
+	case 'text':
+%>
+			<input type='text' disabled='disabled'>
+<%
+	break;
+	case 'textarea':
+%>
+			<textarea disabled='disabled'></textarea>
+<%
+	break;
+	case 'radio':
+		for(idx in options) {
+%>
+			<input type='radio' disabled='disabled' name='' value=''><label>{{ options[idx].label }}</label>
+<%
+		}
+	break;
+	case 'multicheckbox':
+		for(idx in options) {
+%>
+			<input type='checkbox' disabled='disabled' name='' value=''><label>{{ options[idx].label }}</label>
+<%
+		}
+	break;
+	case 'select':
+%>
+			<select disabled='disabled' style='width:100px'></select>
+<%
+	for(idx in options) {
+%>
+			<label>{{ options[idx] }}</label>
+<%
+		}
+	break;
+	case 'button':
+%>
+			<input type='submit' name='button' id='button' value='{{ label }}' /></a>
+<%
+	break;
+	case 'label':
+%>
+			<hr style='width: 80%' />
+<%
+	break;
+	case 'brand':
+%>
+		<select disabled='disabled' style='width:100px'><option value='brand'>BRAND</option></select>
+
+<%
+	break;
+}
+%>
+		</div>
+		<div class='element-desc'>{{ description }}</div>
+		<div class='drop-to-sort' style='background: red; height: 20px; width: 100%;'></div>
+</script>

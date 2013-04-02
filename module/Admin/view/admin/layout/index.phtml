@@ -1,0 +1,39 @@
+<table class='datalist'>
+	<thead class='datalist-head'>
+		<tr class='group-count-row'>
+			<th class='group-count' colspan=3></th>
+		</tr>
+		<tr class='title-row'>
+			<th>标题</th>
+			<th>类型</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class='datalist-body'>
+	</tbody>
+	<tfoot class='datalist-foot'>
+		<tr class='paginator-row'><td id='datalist-paginator' colspan=3></td></tr>
+		<tr class='bulk-action-row'><th class='group-count' colspan=3></th></tr>
+	</tfoot>
+</table>
+
+<script>
+	window.restUrl = '/adminrest/adminrest-layout.json'
+</script>
+
+<script type='text/template' id='data-row'>
+<td>
+	{{data.label}}
+</td>
+<td>
+	{{data.type}}
+	<%if (data.default == 1) {%>
+	(default)
+	<%}%>
+</td>
+<td>
+	<a href='/admin/layout/edit/id/{{data.id}}'>编辑</a>
+</td>
+</script>
+
+<script data-main="<?=$this->siteConfig('extUrl')?>/app/data" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>

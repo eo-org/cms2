@@ -1,0 +1,53 @@
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/domain.css'); ?>
+<div class='help-text'>
+	网站最多可以绑定3个不同的域名.
+</div>
+<ul class='site-domain'>
+	
+</ul>
+
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/domain" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+
+<script type='text/template' id='domain-item-template'>
+	<a id='{{id}}' class='edit' href='javascript:void(0);'>{{ domainName }}</a>
+</script>
+
+<script type='text/template' id='domain-editor'>
+	<%if(id == null){%>
+	<div class='editor-title'>绑定新域名</div>
+	<%} else {%>
+	<div class='editor-title'>解除域名绑定</div>
+	<%}%>
+	<div class='editor-container'>
+	<%if(isDefault == true){%>
+		<div class='label-el'>默认域名：</div>
+		<div>{{ domainName }}</div>
+		<a class='edit-save button' href='javascript:void(0)'>保存</a>
+	<%} else {%>
+		<div class='label-el'>域名：</div>
+		<%if(id == null){%>
+		<div><input class='edit-value' name='domainName' type='text' value='{{ domainName }}'></div>
+		<a class='edit-save button' href='javascript:void(0)'>保存</a>
+		<%} else {%>
+		<div>{{ domainName }}</div>
+		<a class='edit-save button' href='javascript:void(0)'>保存</a>
+		<a class='edit-delete button' href='javascript:void(0)'>解除绑定</a>
+		<%}%>
+	<%}%>
+	</div>
+	
+</script>
+
+<script>
+var bindDomain = function(){
+	var template = _.template($("#domain-editor").html());
+	domain = new Domain();
+	var domainEditorView = new DomainEditorView({
+		model: domain
+	});
+	
+	var prompt = Prompt.getInstance().appendEditorContent(
+		domainEditorView.render().el
+	).showMask();
+}
+</script>

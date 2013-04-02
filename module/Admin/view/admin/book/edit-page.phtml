@@ -1,0 +1,28 @@
+<?php echo $this->tabForm($this->form, array()); ?>
+
+<?php if($this->editor == 'cm') { ?>
+<?php $this->headScript()->appendFile($this->siteConfig('extUrl').'/codemirror3/codemirror.js');?>
+<?php $this->headScript()->appendFile($this->siteConfig('extUrl').'/codemirror3/mode/xml.js');?>
+<?php $this->headScript()->appendFile($this->siteConfig('extUrl').'/codemirror3/mode/javascript.js');?>
+<?php $this->headScript()->appendFile($this->siteConfig('extUrl').'/codemirror3/mode/css.js');?>
+<?php $this->headScript()->appendFile($this->siteConfig('extUrl').'/codemirror3/htmlmixed.js');?>
+<?php $this->headLink()->appendStylesheet($this->siteConfig('extUrl').'/codemirror3/codemirror.css');?>
+<script>
+$('document').ready(function() {
+	var editor = document.getElementById('codemirror-editor');
+	if(editor != null) {
+		codeMirrorEditor = CodeMirror.fromTextArea(editor, {
+			lineNumbers: true,
+			matchBrackets: true,
+			indentUnit: 4,
+			indentWithTabs: true,
+			dragDrop: false,
+			onBlur: function() {
+				codeMirrorEditor.save();
+			}
+		});
+		codeMirrorEditor.refresh();
+	}
+});
+</script>
+<?php } ?>

@@ -1,0 +1,40 @@
+<table class='datalist'>
+	<thead class='datalist-head'>
+		<tr class='title-row'>
+			<th class='s-index' s-index='label' style='width: 485px;'>手册名</th>
+			<th class='s-index' s-index='label' style='width: 485px;'>手册别名(Alias)</th>
+			<th></th>
+		</tr>
+		<tr class='search-row'>
+			<th></th>
+			<th><input class='q-index' q-index='label' type='text' name='' value='' /></th>
+			<th><div class='query-invoker' class='button'>Search</div></th>
+		</tr>
+	</thead>
+	<tbody class='datalist-body'>
+	</tbody>
+	<tfoot class='datalist-foot'>
+		<tr><td id='datalist-paginator' colspan='3'>
+		</td></tr>
+	</tfoot>
+</table>
+
+<script>
+	window.restUrl = '/adminrest/adminrest-book.json'
+</script>
+
+<script type='text/template' id='data-row'>
+<td>
+	{{data.label}}
+</td>
+<td>
+	{{data.alias}}
+</td>
+<td>
+	<a href='/admin/book/edit/id/{{data.id}}'>编辑</a>
+	<a href='/admin/book/edit-page-index/id/{{data.id}}'>整理书页</a>
+</td>
+</script>
+
+
+<script data-main="<?=$this->siteConfig('extUrl')?>/app/dataV4" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>

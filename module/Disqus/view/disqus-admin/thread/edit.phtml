@@ -1,0 +1,26 @@
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/disqus-admin/style/disqus.css');?>
+<ul class="json-post-container">
+
+</ul>
+
+<script>
+var appThreadId = "<?php echo $this->threadId?>";
+</script>
+
+<script data-main="<?=$this->siteConfig('libUrl')?>/disqus-admin/script/app/post" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+
+<script type="text/template" id="post-row">
+<%
+var date = new Date(created.sec * 1000);
+var dateString = date.getFullYear() + "-" + date.getMonth()+1 + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+%>
+
+	<div>
+		<div></div>
+		<div>
+			<div>{{dateString}}</div>
+			<div>{{content}}</div>
+		</div>
+		<div class='remove'>XX</div>
+	</div>
+</script>

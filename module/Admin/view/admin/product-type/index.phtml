@@ -1,0 +1,32 @@
+<table class='datalist'>
+	<thead class='datalist-head'>
+		<tr class='group-count-row'>
+			<th class='group-count' colspan=4></th>
+		</tr>
+		<tr class='title-row'>
+			<th class='s-index' s-index='label' style='width: 285px;'>产品类型名</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class='datalist-body'>
+	</tbody>
+	<tfoot class='datalist-foot'>
+		<tr><td id='datalist-paginator' colspan='4'>
+		</td></tr>
+	</tfoot>
+</table>
+
+<script>
+	window.restUrl = '/adminrest/adminrest-attributeset.json'
+</script>
+
+<script type='text/template' id='data-row'>
+<td>
+	{{data.label}}
+</td>
+<td>
+	<a href='/admin/attributeset/edit/id/{{data.id}}'>编辑</a>
+</td>
+</script>
+
+<script data-main="<?=$this->siteConfig('extUrl')?>/app/dataV4" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>

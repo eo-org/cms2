@@ -1,0 +1,15 @@
+<div class='extension-group'>
+<?php foreach($this->rowset as $row) {?>
+	<a href='#/admin/brick.ajax/list-group/layoutId/<?php echo $this->layoutId?>/stageId/<?php echo $this->stageId?>/spriteName/<?php echo $this->spriteName?>/groupName/<?php echo $row->name?>'>
+		<?php echo $row->label?>
+	</a>
+<?php }?>
+</div>
+
+<div class='extension-group'>
+<?php foreach($this->brickConfig as $key => $row) {?>
+	<a href='#/admin/brick.ajax/list-group/layoutId/<?php echo $this->layoutId?>/stageId/<?php echo $this->stageId?>/spriteName/<?php echo $this->spriteName?>/groupName/<?php echo $key?>'>
+		<?php echo $key?>
+	</a>
+<?php }?>
+</div>

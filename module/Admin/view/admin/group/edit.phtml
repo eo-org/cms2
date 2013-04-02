@@ -1,0 +1,130 @@
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/tree-editor.css'); ?>
+<div class='container-bg'>
+	<ul class='container'>
+		<li class='drop-to-sort'></li>
+	</ul>
+</div>
+<script>
+saveSort = function() {
+	var prompt = Prompt.getInstance().showLoadingBox();
+	prompt.hideHintBox();
+	
+	var treeleafs = $('.treeleaf-item');
+	var sortJsonStr = '{';
+	treeleafs.each(function(i, leaf) {
+		sortJsonStr += '"' + $(leaf).attr('id') +'":{"parentId":"'+$(leaf).attr('parent-id')+'", "sort":' + i + '},';
+	});
+	sortJsonStr = sortJsonStr.substring(0, sortJsonStr.length - 1);
+	sortJsonStr += '}';
+	
+	$.ajax({
+		url: '/adminrest/adminrest-group.json/<?php echo $this->doc->type?>',
+		data: {treeId: "<?php echo $this->doc->type?>", sortJsonStr: sortJsonStr},
+		type: 'PUT',
+		success: function(json) {
+			prompt.hideLoadingBox();
+			$('.changed').removeClass('changed');
+		}
+	});	
+};
+
+//global defines
+var tree = {type: 'group', id: '<?php echo $this->doc->type?>'};
+</script>
+
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/treeleaf" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+
+<script type='text/template' id='treeleaf-item-template'>
+	<% if(parentId == '') {%>
+	<div class='leaf-line changed'>
+	<% } else { %>
+	<div class='leaf-line'>
+	<% } %>
+		<div class='drag-handle' draggable='true'></div>
+		<div class='leaf-label'><a href='javascript:void(0)' class='edit' id='{{ id }}'>
+			<% if(disabled == 'yes') { %>
+			[{{ label }}]
+			<% } else { %>
+			{{ label }}
+			<% } %>
+		</a></div>
+		<div class='leaf-link'>[
+		<?php if ($this->groupType == 'article') { ?>
+			<% if(alias) { %>
+				/list-{{ alias }}/page1.shtml
+			<% } else { %>
+				/list-{{ id }}/page1.shtml
+			<% } %>
+		<?php  } else { ?>
+			<% if(alias) { %>
+				/product-list-{{ alias }}/page1.shtml
+			<% } else { %>
+				/product-list-{{ id }}/page1.shtml
+			<% } %>
+		<?php  } ?>
+		]</div>
+		<!-- div class='leaf-page-edit'>
+			<a class='mini-icon-bg mini-icon-edit' href='/admin/group/edit-item/id/{{ id }}'></a>
+		</div -->
+		<div class='leaf-add-to-navi' data-itemid='{{ id }}'>+</div>
+		<div class='leaf-layout-alias'>
+			{{ layoutAlias }}
+		</div>
+		<div class='clear'></div>
+	</div>
+	<ul class='children'>
+		<li class='drop-to-sort' parent-id='{{ id }}'></li>
+	</ul>
+</script>
+
+<script type='text/template' id='treeleaf-editor'>
+	<div class='editor-title'>新建/修改分组</div>
+	<div class='editor-contenr'>
+		<div class='label-el'>分组名：</div>
+		<div><input class='edit-value' name='label' type='text' value='{{ label }}'></div>
+		<div class='label-el'>显示为文字(不能点击)：</div>
+		<div><select class='edit-value' name='disabled'>
+			<option value='no'>否</option>
+			<option value='yes' <%if(disabled == 'yes') {print('selected="true"')}%> >是</option>
+		</select></div>
+		<div class='link-el'>分组地址(别名)：</div>
+		<div><input class='edit-value' name='alias' type='text' value='{{ alias }}'></div>
+		<div class='link-el'>Layout(别名)：</div>
+		<div><input class='edit-value' name='layoutAlias' type='text' value='{{ layoutAlias }}'></div>
+		<div class='css-el'>Class Name：</div>
+		<div><input class='edit-value' name='className' type='text' value='{{ className }}'></div>
+		<div class='css-el'>Icon Name：</div>
+		<div><input class='edit-value icon-selector' name='iconName' type='text' value='{{ iconName }}' data-callback='appendToInput'></div>
+		<div class='css-el'>Banner Name：</div>
+		<div><input class='edit-value icon-selector' name='bannerName' type='text' value='{{ bannerName }}' data-callback='appendToInput'></div>
+
+		<a class='edit-save button' href='javascript:void(0)'>保存</a>
+		<a class='edit-delete button' href='javascript:void(0)'>删除</a>
+	</div>
+</script>
+
+<script type='text/template' id='add-to-navi-editor'>
+	<div class='editor-title'>添加到导航栏</div>
+	<div class='editor-contenr'>
+		<dt>目录组</dt>
+		<dd><select name='naviId' class='naviId'>
+			<% for(idx in navi) { %>
+			<option value='{{navi[idx].id}}'>{{navi[idx].label}}</option>
+			<% } %>
+		</select></dd>
+		<a class='edit-save button' href='javascript:void(0)'>添加</a>
+	</div>
+</script>
+
+<script>
+var createLinks = function(){
+	var LinkModels = new Treeleaf();
+	var createLinks = new TreeleafEditorView({
+		model:LinkModels
+	});
+	createLinks.render();
+}
+$('.create-link').click(function(){
+	createLinks();
+});
+</script>	

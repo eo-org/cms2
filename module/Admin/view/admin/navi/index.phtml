@@ -1,0 +1,32 @@
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/tree-editor.css')?>
+
+<table class='datalist'>
+	<thead class='datalist-head'>
+		<tr class='title-row'>
+			<th class='s-index' s-index='label' style='width: 485px;'>标题</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class='datalist-body'>
+	</tbody>
+	<tfoot class='datalist-foot'>
+		<tr><td id='datalist-paginator' colspan='2'>
+		</td></tr>
+	</tfoot>
+</table>
+
+<script>
+	window.restUrl = '/adminrest/adminrest-navi.json'
+</script>
+
+<script type='text/template' id='data-row'>
+<td>
+	{{data.label}}
+</td>
+<td>
+	<a href='/admin/navi/edit/id/{{data.id}}'>编辑</a>
+</td>
+</script>
+
+
+<script data-main="<?=$this->siteConfig('extUrl')?>/app/dataV4" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>

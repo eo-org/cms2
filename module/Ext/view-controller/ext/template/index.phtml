@@ -1,0 +1,9 @@
+<?php if(count($this->tplList) > 0) {?>
+<ul>
+	<?php foreach($this->tplList as $tpl) {?>
+	<li><a href='#/admin/extadmin-template.ajax/edit/template-id/<?php echo $tpl->getId()?>/brick-id/<?php echo $this->brickId?>'><?php echo $tpl->getScriptName()?></a></li>
+	<?php }?>
+</ul>
+<?php } else {?>
+数据库中暂时没有Template文件，点击创建来建立新的Template文件
+<?php }?>

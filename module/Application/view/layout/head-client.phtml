@@ -1,0 +1,15 @@
+<link href="<?=$this->siteConfig('extUrl')?>/reset.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="<?=$this->siteConfig('libUrl')?>/front/style/sprite.css" media="screen" rel="stylesheet" type="text/css" >
+
+<script type="text/javascript" src="<?=$this->siteConfig('extUrl')?>/src/jquery.1.8.3.min.js"></script>
+
+<?php if(is_string($this->effectJs)	)	{?><script type="text/javascript"	src="http://minify.enorange.cn/?b=resource/cms/v2/front/script/effect&f=<?php echo $effectJs?>"></script><?php }?>
+<?php if(is_string($this->effectCss))	{?><link type="text/css" href="http://minify.enorange.cn/?b=resource/cms/v2/front/script/effect&f=<?php echo $effectCss?>" media="screen" rel="stylesheet"><?php }?>
+<?php if(is_array($this->effectJs)	)	{ foreach($this->effectJs as $js) {?><script type="text/javascript" src="<?=$this->siteConfig('libUrl')?>/front/script/effect/<?php echo $js?>"></script><?php } } ?>
+<?php if(is_array($this->effectCss)	)	{ foreach($this->effectCss as $css) {?><link type="text/css" href="<?=$this->siteConfig('libUrl')?>/front/script/effect/<?php echo $css?>" media="screen" rel="stylesheet"><?php } } ?>
+
+
+<script>
+window.ORG_CODE = "<?php echo $this->siteConfig('organizationCode')?>";
+window.SITE_FOLDER = "<?php echo $this->siteConfig('remoteSiteId')?>";
+</script>

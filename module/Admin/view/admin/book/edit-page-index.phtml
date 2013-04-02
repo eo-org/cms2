@@ -1,0 +1,89 @@
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/tree-editor.css'); ?>
+<div class='container-bg'>
+	<ul class='container'>
+		<li class='drop-to-sort'></li>
+	</ul>
+</div>
+
+<script>
+saveSort = function() {
+	var prompt = Prompt.getInstance().showLoadingBox();
+	prompt.hideHintBox();
+	
+	var treeleafs = $('.treeleaf-item');
+	var sortJsonStr = '{';
+	treeleafs.each(function(i, leaf) {
+		sortJsonStr += '"' + $(leaf).attr('id') +'":{"parentId":"'+$(leaf).attr('parent-id')+'", "sort":' + i + '},';
+	});
+	sortJsonStr = sortJsonStr.substring(0, sortJsonStr.length - 1);
+	sortJsonStr += '}';
+	
+	$.ajax({
+		url: '/adminrest/adminrest-book.json/<?php echo $this->doc->getId()?>',
+		data: {sortJsonStr: sortJsonStr},
+		type: 'put',
+		success: function(json) {
+			prompt.hideLoadingBox();
+			$('.changed').removeClass('changed');
+		}
+	});	
+};
+
+//global defines
+var tree = {type: 'book', id: '<?php echo $this->doc->getId()?>'};
+</script>
+
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/treeleaf" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+
+<script type='text/template' id='treeleaf-item-template'>
+	<% if(parentId == '') {%>
+	<div class='leaf-line changed'>
+	<% } else { %>
+	<div class='leaf-line'>
+	<% } %>
+		<div class='drag-handle' draggable='true'></div>
+		<div class='leaf-label'><a href='javascript:void(0)' class='edit' id='{{ id }}'>{{ label }}</a></div>
+		
+		<div class='leaf-page-edit'>
+			<a class='mini-icon-bg mini-icon-edit' href='/admin/book/edit-page/id/{{ id }}'></a>
+		</div>
+		
+		<div class='leaf-link'>
+		<% if(alias) { %>
+			{{ alias }}
+		<% } else { %>
+			{{ id }}
+		<% } %>
+		</div>
+
+		<div class='clear'></div>
+	</div>
+	<ul class='children'>
+		<li class='drop-to-sort' parent-id='{{ id }}'></li>
+	</ul>
+</script>
+
+<script type='text/template' id='treeleaf-editor'>
+	<div class='editor-title'>新建/修改链接</div>
+	<div class='editor-contenr'>
+		<div class='label-el'>书页名：</div>
+		<div><input class='edit-value' name='label' type='text' value='{{ label }}'></div>
+		<div class='link-el'>书页别名(alias)：</div>
+		<div><input class='edit-value' name='alias' type='text' value='{{ alias }}'></div>
+		<a class='edit-save button' href='javascript:void(0)'>保存</a>
+		<a class='edit-delete button' href='javascript:void(0)'>删除</a>
+	</div>
+</script>
+
+<script>
+var createLink = function(){
+	var LinkModel = new Treeleaf();
+	var createLink = new TreeleafEditorView({
+		model:LinkModel
+	});
+	createLink.render();
+}
+$('.create-link').click(function(){
+	createLink();
+});
+</script>

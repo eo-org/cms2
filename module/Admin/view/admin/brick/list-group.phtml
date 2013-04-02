@@ -1,0 +1,29 @@
+<?php
+	foreach($this->rowset as $row) {
+	echo "<a class='brick-selector-row' href='#/admin/brick.ajax/edit/extName/$row->name/layoutId/$this->layoutId/stageId/$this->stageId/spriteName/$this->spriteName'>";
+?>
+		<div class='icon extension-icon <?php echo $row->name ?>'></div>
+		<div class='detail'>
+			<div class='ext-name'><?php echo $row->name ?></div>
+			<?php echo $row->label?><br /><br />
+			<?php echo $row->desc?>
+		</div>
+<?php
+	echo "</a>";
+	}
+?>
+
+<?php
+	foreach($this->groupConfig as $key => $row) {
+	echo "<a class='brick-selector-row' href='#/admin/brick.ajax/edit/extName/$key/layoutId/$this->layoutId/stageId/$this->stageId/spriteName/$this->spriteName'>";
+?>
+		<div class='icon extension-icon'></div>
+		<div class='detail'>
+			<div class='ext-name'><?php echo $key ?></div>
+			<?php echo $row['label']?><br /><br />
+			<?php echo $row['desc']?>
+		</div>
+<?php
+	echo "</a>";
+	}
+?>

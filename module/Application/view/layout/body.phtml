@@ -1,0 +1,46 @@
+<?php
+$layoutDoc = $this->layoutFront->getLayoutDoc();
+$stageList= $this->layoutFront->getStageList();
+$brickViewList= $this->layoutFront->getBrickViewList();
+?>
+
+<?php if($layoutDoc->hideHead != 1) {?>
+<div id='body_head'>
+	<div class='sprite body_head' sprite-name="body_head" stage-id="0">
+		<?php echo array_key_exists('body_head', $brickViewList) ? $brickViewList['body_head'] : "" ?>
+	</div>
+</div>
+<?php }?>
+
+<div class='body_main_frame' layoutId='<?php echo $layoutDoc->getId()?>'>
+<?php
+if(!is_null($stageList)) {foreach($stageList as $stage) {
+?>
+<div<?php echo empty($stage['uniqueId']) ? " " : " id='".$stage['uniqueId']."'"?> class='stage' type='<?php echo $stage['type']?>' stage-id='<?php echo $stage['stageId']?>'>
+<?php
+	$typeArr = explode('-', $stage['type']);
+	foreach($typeArr as $key => $spriteType) {
+		$spriteName = $stage['stageId'].'-'.$key;
+?>
+	<div<?php echo empty($stage['uniqueId']) ? " " : " id='".$stage['uniqueId']."-$key'"?> stage-id='<?php echo $stage['stageId']?>' sprite-name='<?php echo $spriteName?>' class='sprite grid-<?php echo $spriteType?>'>
+	<?php if(array_key_exists($spriteName, $brickViewList)) { ?>
+	<?php echo $brickViewList[$spriteName]?>
+	<?php } ?>
+	</div>
+<?php		
+	}
+?>
+	<div class='clear'></div>
+</div>
+<?php
+}}
+?>
+</div>
+
+<?php if($layoutDoc->hideTail != 1) {?>
+<div id='body_tail'>
+	<div class='sprite body_tail' sprite-name="body_tail" stage-id="0">
+		<?php echo array_key_exists('body_tail', $brickViewList) ? $brickViewList['body_tail'] : "" ?>
+	</div>
+</div>
+<?php }?>

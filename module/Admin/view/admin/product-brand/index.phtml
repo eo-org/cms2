@@ -1,0 +1,42 @@
+<div class='datalist-frame'>
+<div class='datalist-filter'>
+	<div class='title'>商标/品牌 分类</div>
+	<ul>
+		
+	</ul>
+</div>
+<div class='datalist'><table class='datalist'>
+	<thead class='datalist-head'>
+		<tr class='title-row'>
+			<th class='s-index' s-index='label' style='width: 285px;'>商标/品牌</th>
+			<th></th>
+		</tr>
+		<tr class='search-row'>
+			<th><input class='q-index' q-index='label' type='text' name='' value='' /></th>
+			<th><div class='query-invoker' class='button'>Search</div></th>
+		</tr>
+	</thead>
+	<tbody class='datalist-body'>
+	</tbody>
+	<tfoot class='datalist-foot'>
+		<tr><td id='datalist-paginator' colspan='2'>
+		</td></tr>
+	</tfoot>
+</table></div>
+<div class='clear'></div>
+</div>
+
+<script>
+	window.restUrl = '/adminrest/adminrest-product-brand.json'
+</script>
+
+<script type='text/template' id='data-row'>
+<td>
+	{{data.label}}
+</td>
+<td>
+	<a href='/admin/product-brand/edit/id/{{data.id}}'>编辑</a>
+</td>
+</script>
+
+<script data-main="<?=$this->siteConfig('extUrl')?>/app/dataV4" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
