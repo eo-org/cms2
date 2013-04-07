@@ -3,7 +3,7 @@ namespace Cms\Layout;
 
 use Zend\View\Helper\Doctype, Zend\View\Helper\HeadTitle, Zend\View\Helper\HeadMeta;
 use Ext\Service\Register, Ext\Service\RegisterConfig;
-use Fucms\Session\Admin as SessionAdmin;
+use Cms\Session\Admin as SessionAdmin;
 
 class Front
 {

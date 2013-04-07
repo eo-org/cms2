@@ -25,6 +25,7 @@ class ContextFactory
 		$id = $routeMatch->getParam('id');
 		$presetLayoutDoc = null;
 		$factory = $this->sm->get('Core\Mongo\Factory');
+		$documentManager = $this->sm->get('DocumentManager');
 		
 		if($routeName == 'application/layout') {
 			$layoutCo = $factory->_m('Layout');
@@ -73,7 +74,7 @@ class ContextFactory
 			case 'application/book':
 				$bookId = $id;
 				$pageId = $routeMatch->getParam('pageId');
-				$context = new Context\Book($factory);
+				$context = new Context\Book($factory, $documentManager);
 				$context->init($bookId, $pageId, $presetLayoutDoc);
 				break;
 			case 'application/article':

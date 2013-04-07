@@ -59,7 +59,7 @@ $autoLoader = new Zend\Loader\StandardAutoloader(array(
 ));
 $autoLoader->register();
 
-\Fucms\SiteConfig::setSiteArr($siteArr);
+\Cms\SiteConfig::setSiteArr($siteArr);
 
 $application = Zend\Mvc\Application::init(include 'config/application.config.php');
 $application->run();

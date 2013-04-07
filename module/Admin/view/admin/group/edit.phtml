@@ -1,4 +1,4 @@
-<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/tree-editor.css'); ?>
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/group-editor.css'); ?>
 <div class='container-bg'>
 	<ul class='container'>
 		<li class='drop-to-sort'></li>
@@ -32,7 +32,7 @@ saveSort = function() {
 var tree = {type: 'group', id: '<?php echo $this->doc->type?>'};
 </script>
 
-<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/treeleaf" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/group-item" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
 
 <script type='text/template' id='treeleaf-item-template'>
 	<% if(parentId == '') {%>

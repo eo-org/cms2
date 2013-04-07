@@ -15,9 +15,10 @@ abstract class ContextAbstract
 	protected $query = array();
 	protected $shouldCache = false;
 	
-	public function __construct($dbFactory)
+	public function __construct($dbFactory, $documentManager = null)
 	{
 		$this->dbFactory = $dbFactory;
+		$this->documentManager = $documentManager;
 	}
 	
 	protected function createDefaultLayout($type)

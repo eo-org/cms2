@@ -1,7 +1,7 @@
 <?php
 namespace Ext\Twig;
 
-use Fucms\Session\Admin;
+use Cms\Session\Admin;
 
 class View
 {

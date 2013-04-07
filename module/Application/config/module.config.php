@@ -176,7 +176,7 @@ return array(
 	'service_manager' => array(
 		'factories' => array(
 			'ConfigObject\EnvironmentConfig' => function($serviceManager) {
-				$siteConfig = new \Fucms\SiteConfig(include 'config/server.config.php.dist');
+				$siteConfig = new \Cms\SiteConfig(include 'config/server.config.php.dist');
 				return $siteConfig;
 			},
 			'Cms\Layout\Front' => 'Cms\Layout\FrontFactory',

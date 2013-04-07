@@ -5,7 +5,7 @@ use Zend\I18n\Translator\Translator;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Application;
 use Zend\EventManager\StaticEventManager;
-use Fucms\Session\Admin as SessionAdmin;
+use Cms\Session\Admin as SessionAdmin;
 
 class Module
 {

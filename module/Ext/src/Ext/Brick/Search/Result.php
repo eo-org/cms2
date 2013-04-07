@@ -25,6 +25,7 @@ class Result extends AbstractExt
     	}
     	
     	$pageSize = 20;
+    	$dataSize = 0;
     	$data = array();
     	if(!empty($keywords)) {
     		$factory = $this->dbFactory();
@@ -44,11 +45,11 @@ class Result extends AbstractExt
     				->setPage($page)
     				->setPageSize($pageSize);
     		}
+    		
+    		$dataSize = $co->count();
+    		$data = $co->fetchDoc();
     	}
     	
-		$dataSize = $co->count();
-		$data = $co->fetchDoc();
-		
 		$paginator = new Paginator(new NullAdapter($dataSize));
 		Paginator::setDefaultScrollingStyle('Sliding');
 		$paginator->setCurrentPageNumber($page)

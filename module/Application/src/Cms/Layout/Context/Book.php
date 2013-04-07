@@ -31,10 +31,12 @@ class Book extends ContextAbstract
 			$layoutAlias = $bookDoc->layoutAlias;
 		}
 		$this->bookDoc = $bookDoc;
-		//$this->trail = $bookDoc->getTrail($pageId);
+		$this->trail = $bookDoc->getTrail($pageId);
 		
 		//** todo build get trail function, this is used for navi selected 
-		$this->trail = array(array('id' => $bookDoc->getId()));
+		//$this->trail = array(array('id' => $bookDoc->getId()));
+		
+		print_r($this->trail);
 		
 		$layoutDoc = null;
 		if(is_null($presetLayoutDoc)) {
