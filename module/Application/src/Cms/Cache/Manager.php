@@ -1,7 +1,7 @@
 <?php
 namespace Cms\Cache;
 
-use Fucms\Session\Admin as SessionAdmin;
+use Cms\Session\Admin as SessionAdmin;
 
 class Manager
 {
