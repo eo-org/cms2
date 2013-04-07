@@ -1,10 +1,10 @@
-{% if doc %}
+{% if label %}
 	{% if showTitle == 'y' %}
-	<div class='title'>{{ doc.getLabel() }}</div>
+	<div class='title'>{{ label }}</div>
 	{% endif %}
 	
 	<div class='content'>
-		{{ doc.getFulltext()|raw }}
+		{{ fulltext|raw }}
 	</div>
 {% else %}
 	<div class='error'>对不起，你寻找的文章不存在！</div>

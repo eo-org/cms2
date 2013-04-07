@@ -17,7 +17,9 @@ class PageDetail extends AbstractExt
 		}
 		
     	$pageDoc = $context->getSubjectDoc();
-    	$this->view->doc = $pageDoc;
+    	
+    	$this->view->label = $pageDoc->getLabel();
+    	$this->view->fulltext = $pageDoc->getFulltext();
     }
     
     public function getFormClass()
