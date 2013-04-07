@@ -7,9 +7,15 @@ use Zend\ModuleManager\ModuleEvent;
 use Zend\EventManager\StaticEventManager;
 use Zend\Session\Container;
 use Core\Session\SsoAuth;
-use Fucms\Session\Admin as SessionAdmin;
-use Fucms\Brick\Register;
-use Fucms\Brick\Service\RegisterConfigAdmin;
+use Cms\Session\Admin as SessionAdmin;
+use Cms\Brick\Register;
+use Cms\Brick\Service\RegisterConfigAdmin;
+
+/**
+ * 
+ * @author Gavin
+ * @todo config different backend here ??
+ */
 
 class Module
 {

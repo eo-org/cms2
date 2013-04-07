@@ -7,6 +7,7 @@ use MongoId;
 abstract class ContextAbstract
 {
 	protected $dbFactory;
+	protected $documentManager;
 	protected $layoutDoc;
 	protected $trail;
 	protected $breadcrumb;
@@ -19,6 +20,11 @@ abstract class ContextAbstract
 	{
 		$this->dbFactory = $dbFactory;
 		$this->documentManager = $documentManager;
+	}
+	
+	public function getDocumentManager()
+	{
+		return $this->documentManager;
 	}
 	
 	protected function createDefaultLayout($type)

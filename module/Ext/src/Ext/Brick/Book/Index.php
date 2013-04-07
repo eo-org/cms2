@@ -20,8 +20,8 @@ class Index extends AbstractExt
     		$this->_disableRender = 'no-resource';
 			return;
     	}
-    	$this->view->bookAlias = $bookDoc->alias;
-    	$this->view->bookIndex = $bookDoc->bookIndex;
+    	$this->view->bookAlias = $bookDoc->getAlias();
+    	$this->view->bookIndex = $bookDoc->getBookIndex();
     }
     
     public function getTplList()

@@ -10,33 +10,49 @@ class Book extends ContextAbstract
 	
 	protected $bookId;
 	protected $bookDoc;
+	protected $bookPageDoc;
+	
 	protected $trail = array();
 	
 	protected $bookLabel;
 	
-	public function init($bookId, $pageId, $presetLayoutDoc = null)
+	public function init($bookAlias, $pageId, $presetLayoutDoc = null)
 	{
-		$bookCo = $this->dbFactory->_m('Book');
-		$bookDoc = $bookCo->addFilter('$or', array(
-				array('_id' => new MongoId($bookId)),
-				array('alias' => $bookId)
-			))->fetchOne();
+		$dm = $this->getDocumentManager();
+		
+		$bookDoc = $dm->createQueryBuilder('Cms\Document\Book')->field('alias')->equals($bookAlias)
+			->getQuery()
+			->getSingleResult();
+		
+// 		$bookCo = $this->dbFactory->_m('Book');
+// 		$bookDoc = $bookCo->addFilter('$or', array(
+// 				array('_id' => new MongoId($bookId)),
+// 				array('alias' => $bookId)
+// 			))->fetchOne();
 		
 		if($bookDoc == null) {
 			$this->bookId = 0;
 			$layoutAlias = null;
 		} else {
 			$this->bookId = $bookDoc->getId();
-			$this->bookLabel = $bookDoc->label;
-			$layoutAlias = $bookDoc->layoutAlias;
+			$this->bookLabel = $bookDoc->getLabel();
+			$layoutAlias = $bookDoc->getLayoutAlias();
+			
+			if(is_null($pageId)) {
+				$pageId = 'index';
+			}
+			
+			$qb = $dm->createQueryBuilder('Cms\Document\Book\Page')
+				->field('bookId')->equals($this->bookId);
+			$qb->addOr($qb->expr()->field('_id')->equals($pageId))
+				->addOr($qb->expr()->field('alias')->equals($pageId));
+			
+			$this->bookPageDoc = $qb->getQuery()
+				->getSingleResult();
+			$pageId = $this->bookPageDoc->getId();
 		}
 		$this->bookDoc = $bookDoc;
 		$this->trail = $bookDoc->getTrail($pageId);
-		
-		//** todo build get trail function, this is used for navi selected 
-		//$this->trail = array(array('id' => $bookDoc->getId()));
-		
-		print_r($this->trail);
 		
 		$layoutDoc = null;
 		if(is_null($presetLayoutDoc)) {
@@ -62,12 +78,17 @@ class Book extends ContextAbstract
 		}
 		
 		$this->layoutDoc = $layoutDoc;
-		$this->routeParams = array('id' => $bookId);
+		$this->routeParams = array('id' => $bookAlias);
 	}
 	
 	public function getContextDoc()
 	{
 		return $this->bookDoc;
+	}
+	
+	public function getSubjectDoc()
+	{
+		return $this->bookPageDoc;
 	}
 	
 	public function getId()

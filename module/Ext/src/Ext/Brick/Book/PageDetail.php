@@ -16,18 +16,7 @@ class PageDetail extends AbstractExt
 			throw new Exception('this extension is only suitable for a book typed layout!');
 		}
 		
-    	$pageId = $context->getParam('pageId');
-    	
-    	if(is_null($pageId)) {
-    		$pageId = 'index';
-    	}
-    	
-    	$factory = $this->dbFactory();
-    	$co = $factory->_m('Book_Page');
-    	$pageDoc = $co->addFilter('$or', array(
-	    		array('_id' => new MongoId($pageId)),
-	    		array('alias' => $pageId)
-	    	))->addFilter('bookId', $context->getId())->fetchOne();
+    	$pageDoc = $context->getSubjectDoc();
     	$this->view->doc = $pageDoc;
     }
     
