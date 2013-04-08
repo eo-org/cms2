@@ -32,32 +32,32 @@
 
 <script type='text/template' id='data-row'>
 <td>
-	{{data.label}}
+	<%=data.label%>
 </td>
 <td>
-	{{data.name}}
+	<%=data.name%>
 </td>
 <td>
-	{{data.groupId}}
+	<%=data.groupId%>
 </td>
 <td>
-	<a href='/admin/product/edit/id/{{data.id}}'>编辑</a>
-	<a class='ajax-to-trash' data-id='{{data.id}}' href='/admin/product/delete/id/{{data.id}}'>放入回收站</a>
+	<a href='/admin/product/edit/id/<%=data.id%>'>编辑</a>
+	<a class='ajax-to-trash' data-id='<%=data.id%>' href='/admin/product/delete/id/<%=data.id%>'>放入回收站</a>
 </td>
 </script>
 
 <script type='text/template' id='data-trash-row'>
 <td>
-	{{data.label}}
+	<%=data.label%>
 </td>
 <td>
-	{{data.name}}
+	<%=data.name%>
 </td>
 <td>
-	{{data.groupId}}
+	<%=data.groupId%>
 </td>
 <td>
-	<a class='ajax-to-trash' data-id='{{data.id}}' href='/admin/product/delete/id/{{data.id}}'>还原</a>
+	<a class='ajax-to-trash' data-id='<%=data.id%>' href='/admin/product/delete/id/<%=data.id%>'>还原</a>
 </td>
 </script>
 

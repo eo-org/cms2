@@ -15,6 +15,7 @@ return array(
 			'adminrest-treeleaf'	=> 'Rest\Controller\TreeleafController',
 			'adminrest-head-file'	=> 'Rest\Controller\HeadFileController',
 			'adminrest-group'		=> 'Rest\Controller\GroupController',
+			'adminrest-group-item'	=> 'Rest\Controller\GroupItemController',
 			'adminrest-layout'		=> 'Rest\Controller\LayoutController',
 			'adminrest-domain'		=> 'Rest\Controller\DomainController',
 			'adminrest-attribute'	=> 'Rest\Controller\AttributeController',

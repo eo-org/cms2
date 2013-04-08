@@ -16,7 +16,7 @@
 		    </li>
 			<?php } else { ?>
 			<li class='root'>
-				<a class='root parent' href='<?php echo str_replace("{{remoteSiteId}}", $this->remoteSiteId, $node['url'])?>'>
+				<a class='root parent' href='<?php echo str_replace("<%=remoteSiteId%>", $this->remoteSiteId, $node['url'])?>'>
 					<div class='text'><?php echo $node['title'] ?></div>
 					<div class='clear'></div>
 				</a>

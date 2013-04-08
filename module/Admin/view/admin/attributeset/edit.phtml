@@ -49,11 +49,11 @@ var attributeset = {id: '<?php echo $this->id?>'};
 <script type='text/template' id='attribute-editor-template'>
 	<dl>
 	<dt>UUID</dt>
-	<dd><input class='attribute-field' type="text" name="UUID" value="{{ UUID }}" /></dd>
+	<dd><input class='attribute-field' type="text" name="UUID" value="<%= UUID %>" /></dd>
 	<dt>CODE</dt>
-	<dd><input class='attribute-field' type="text" name="code" value="{{ code }}" /></dd>
+	<dd><input class='attribute-field' type="text" name="code" value="<%= code %>" /></dd>
 	<dt>标题</dt>
-	<dd><input class='attribute-field' type="text" name="label" value="{{ label }}" /></dd>
+	<dd><input class='attribute-field' type="text" name="label" value="<%= label %>" /></dd>
 	<hr />
 <%
 if(type == 'radio' || type == 'select' || type == 'multicheckbox') {
@@ -65,8 +65,8 @@ if(type == 'radio' || type == 'select' || type == 'multicheckbox') {
 	for(idx in options) {
 %>
 		<li class='option-item'>
-			code <input class='attribute-field' type='text' group-tag='option' name='code' value='{{ idx }}' />
-			label <input class='attribute-field' type='text' group-tag='option' name='label' value='{{ options[idx] }}' />
+			code <input class='attribute-field' type='text' group-tag='option' name='code' value='<%= idx %>' />
+			label <input class='attribute-field' type='text' group-tag='option' name='label' value='<%= options[idx] %>' />
 			<span class='option-remove op-remove'>-</span>
 		</li>
 <%
@@ -79,7 +79,7 @@ if(type == 'radio' || type == 'select' || type == 'multicheckbox') {
 }
 %>
 	<dt>描述</dt>
-	<dd><textarea class='attribute-field' name="description">{{ description }}</textarea></dd>
+	<dd><textarea class='attribute-field' name="description"><%= description %></textarea></dd>
 	</dl>
 	<div class='attribute-save'>SAVE</div>
 	<div class='attribute-delete'>DELETE</div>
@@ -87,7 +87,7 @@ if(type == 'radio' || type == 'select' || type == 'multicheckbox') {
 
 <script type='text/template' id='attribute-template'>
 		<div class='element-label'>
-			<a class='lightbox-trigger' attribute-id='{{ id }}' href='#'>{{ label }}</a>
+			<a class='lightbox-trigger' attribute-id='<%= id %>' href='#'><%= label %></a>
 		</div>
 		<div class='element'>
 <%
@@ -105,14 +105,14 @@ switch(type) {
 	case 'radio':
 		for(idx in options) {
 %>
-			<input type='radio' disabled='disabled' name='' value=''><label>{{ options[idx].label }}</label>
+			<input type='radio' disabled='disabled' name='' value=''><label><%= options[idx].label %></label>
 <%
 		}
 	break;
 	case 'multicheckbox':
 		for(idx in options) {
 %>
-			<input type='checkbox' disabled='disabled' name='' value=''><label>{{ options[idx].label }}</label>
+			<input type='checkbox' disabled='disabled' name='' value=''><label><%= options[idx].label %></label>
 <%
 		}
 	break;
@@ -122,13 +122,13 @@ switch(type) {
 <%
 	for(idx in options) {
 %>
-			<label>{{ options[idx] }}</label>
+			<label><%= options[idx] %></label>
 <%
 		}
 	break;
 	case 'button':
 %>
-			<input type='submit' name='button' id='button' value='{{ label }}' /></a>
+			<input type='submit' name='button' id='button' value='<%= label %>' /></a>
 <%
 	break;
 	case 'label':
@@ -145,6 +145,6 @@ switch(type) {
 }
 %>
 		</div>
-		<div class='element-desc'>{{ description }}</div>
+		<div class='element-desc'><%= description %></div>
 		<div class='drop-to-sort' style='background: red; height: 20px; width: 100%;'></div>
 </script>

@@ -25,14 +25,14 @@
 
 <script type='text/template' id='data-row'>
 <td>
-	{{data.label}}
+	<%=data.label%>
 </td>
 <td>
-	{{data.alias}}
+	<%=data.alias%>
 </td>
 <td>
-	<a href='/admin/book/edit/id/{{data.id}}'>编辑</a>
-	<a href='/admin/book/edit-page-index/id/{{data.id}}'>整理书页</a>
+	<a href='/admin/book/edit/id/<%=data.id%>'>编辑</a>
+	<a href='/admin/book/edit-page-index/id/<%=data.id%>'>整理书页</a>
 </td>
 </script>
 

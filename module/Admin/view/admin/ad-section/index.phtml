@@ -14,15 +14,15 @@ var fileUrl = "<?php echo $this->siteConfig('fileFolderUrl')?>";
 	<%
 		for(var i = 0;i < preview.length;i++) {
 	%>
-		<img class="i-{{i}}" src="{{fileUrl}}/_thumb/{{preview[i]}}">
+		<img class="i-<%=i%>" src="<%=fileUrl%>/_thumb/<%=preview[i]%>">
 	<%
 		}
 	%>
 	</div>
-	<div class='label'>{{label}}</div>
+	<div class='label'><%=label%></div>
 	<div class='bb-action'>
 		<a href="javascript:void(0);" class="action-edit">编辑</a>
-		<a href="/admin/ad/index/section-id/{{id}}">添加广告图</a>
+		<a href="/admin/ad/index/section-id/<%=id%>">添加广告图</a>
 	</div>
 	<div style="clear:both;"></div>
 </script>
@@ -31,7 +31,7 @@ var fileUrl = "<?php echo $this->siteConfig('fileFolderUrl')?>";
 	<div class='editor-title'>新建/修改广告组</div>
 	<dl>
 		<dt>名字</dt>
-		<dd><input class='value-field' type='text' name='label' value='{{label}}' /></dd>
+		<dd><input class='value-field' type='text' name='label' value='<%=label%>' /></dd>
 		<dd class='action-dd button'>SAVE</dd>
 	<%
 		if(id != null){

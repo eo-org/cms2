@@ -9,7 +9,7 @@
 <script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/domain" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
 
 <script type='text/template' id='domain-item-template'>
-	<a id='{{id}}' class='edit' href='javascript:void(0);'>{{ domainName }}</a>
+	<a id='<%=id%>' class='edit' href='javascript:void(0);'><%= domainName %></a>
 </script>
 
 <script type='text/template' id='domain-editor'>
@@ -21,15 +21,15 @@
 	<div class='editor-container'>
 	<%if(isDefault == true){%>
 		<div class='label-el'>默认域名：</div>
-		<div>{{ domainName }}</div>
+		<div><%= domainName %></div>
 		<a class='edit-save button' href='javascript:void(0)'>保存</a>
 	<%} else {%>
 		<div class='label-el'>域名：</div>
 		<%if(id == null){%>
-		<div><input class='edit-value' name='domainName' type='text' value='{{ domainName }}'></div>
+		<div><input class='edit-value' name='domainName' type='text' value='<%= domainName %>'></div>
 		<a class='edit-save button' href='javascript:void(0)'>保存</a>
 		<%} else {%>
-		<div>{{ domainName }}</div>
+		<div><%= domainName %></div>
 		<a class='edit-save button' href='javascript:void(0)'>保存</a>
 		<a class='edit-delete button' href='javascript:void(0)'>解除绑定</a>
 		<%}%>

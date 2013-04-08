@@ -35,18 +35,18 @@
 </script>
 <script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/attachment" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
 <script type='text/template' id='graphic-template'>
-	<div class='image'><img src='http://storage.aliyun.com/public-misc/{{ window.SITE_FOLDER }}/_thumb/{{ urlname }}'></div>
-	<div class='label'>{{ filename }}</div>
-	<div class='set-introicon' urlname='{{ urlname }}'>设置为缩略图</div>
+	<div class='image'><img src='http://storage.aliyun.com/public-misc/<%= window.SITE_FOLDER %>/_thumb/<%= urlname %>'></div>
+	<div class='label'><%= filename %></div>
+	<div class='set-introicon' urlname='<%= urlname %>'>设置为缩略图</div>
 	<div class='mini-icon-bg mini-icon-delete remove'></div>
-	<input type='hidden' name='attaUrl[]' value='{{ urlname }}' />
-	<input type='hidden' name='attaName[]' value='{{ filename }}' />
+	<input type='hidden' name='attaUrl[]' value='<%= urlname %>' />
+	<input type='hidden' name='attaName[]' value='<%= filename %>' />
 	<input type='hidden' name='attaType[]' value='graphic' />
 </script>
 <script type='text/template' id='download-template'>
-	<div class='name'>{{ filename }}</div>
+	<div class='name'><%= filename %></div>
 	<div class='mini-icon-bg mini-icon-delete remove'></div>
-	<input type='hidden' name='attaUrl[]' value='{{ urlname }}' />
-	<input type='hidden' name='attaName[]' value='{{ filename }}' />
+	<input type='hidden' name='attaUrl[]' value='<%= urlname %>' />
+	<input type='hidden' name='attaName[]' value='<%= filename %>' />
 	<input type='hidden' name='attaType[]' value='download' />
 </script>

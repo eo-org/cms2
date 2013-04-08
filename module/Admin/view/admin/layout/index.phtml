@@ -23,16 +23,16 @@
 
 <script type='text/template' id='data-row'>
 <td>
-	{{data.label}}
+	<%=data.label%>
 </td>
 <td>
-	{{data.type}}
+	<%=data.type%>
 	<%if (data.default == 1) {%>
 	(default)
 	<%}%>
 </td>
 <td>
-	<a href='/admin/layout/edit/id/{{data.id}}'>编辑</a>
+	<a href='/admin/layout/edit/id/<%=data.id%>'>编辑</a>
 </td>
 </script>
 

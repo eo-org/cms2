@@ -9,12 +9,11 @@ class GroupItemController extends AbstractRestfulController
 {
 	public function getList()
 	{
-		$treeType = $this->getRequest()->getHeader('X-Tree-Type')->getFieldValue();
-		$treeId = $this->getRequest()->getHeader('X-Tree-Id')->getFieldValue();
+		$groupType = $this->getRequest()->getHeader('X-Group-Type')->getFieldValue();
 		$factory = $this->dbFactory();
 		
 		$co = $factory->_m('Group_Item')
-			->addFilter('groupType', $treeId)
+			->addFilter('groupType', $groupType)
 			->setFields(array('label', 'alias', 'layoutAlias', 'parentId', 'className', 'iconName', 'bannerName', 'sort', 'disabled', 'groupType'));
 				
 		$data = $co->addSort('sort', 1)
@@ -31,19 +30,18 @@ class GroupItemController extends AbstractRestfulController
 	
 	public function create($data)
 	{
-		$treeType = $this->getRequest()->getHeader('X-Tree-Type')->getFieldValue();
-		$treeId = $this->getRequest()->getHeader('X-Tree-Id')->getFieldValue();
+		$groupType = $this->getRequest()->getHeader('X-Group-Type')->getFieldValue();
 		
 		$factory = $this->dbFactory();
 		
 		$co = $factory->_m('Group_Item');
 		$doc = $co->create();
-		$doc->groupType = $treeId;
 				
 		$dataStr = $data['model'];
 		$dataArr = Json::decode($dataStr, Json::TYPE_ARRAY);
 		
 		$doc->setFromArray($dataArr);
+		$doc->groupType = $groupType;
 		$doc->save();
 		
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
@@ -52,7 +50,7 @@ class GroupItemController extends AbstractRestfulController
 	
 	public function update($id, $data)
 	{
-		$treeType = $this->getRequest()->getHeader('X-Tree-Type')->getFieldValue();
+		$groupType = $this->getRequest()->getHeader('X-Group-Type')->getFieldValue();
 		
 		$factory = $this->dbFactory();
 		$co = $factory->_m('Group_Item');
@@ -69,7 +67,7 @@ class GroupItemController extends AbstractRestfulController
 	
 	public function delete($id)
 	{
-		$treeType = $this->getRequest()->getHeader('X-Tree-Type')->getFieldValue();
+		$groupType = $this->getRequest()->getHeader('X-Group-Type')->getFieldValue();
 		
 		$factory = $this->dbFactory();
 		$co = $factory->_m('Group_Item');

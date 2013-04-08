@@ -12,12 +12,12 @@ var fileFolderUrl = "<?php echo $this->siteConfig('fileFolderUrl')?>";
 
 <script type="text/template" id="ad">
 	<div class="thumb">
-		<img src="{{fileFolderUrl}}/_thumb/{{filename}}">
+		<img src="<%=fileFolderUrl%>/_thumb/<%=filename%>">
 	</div>
 	<dl>
-		<dt>连接地址</dt><dd>:{{link}}</dd>
-		<dt>标题</dt><dd>:{{label}}</dd>
-		<dt>说明</dt><dd>:{{description}}</dd>
+		<dt>连接地址</dt><dd>:<%=link%></dd>
+		<dt>标题</dt><dd>:<%=label%></dd>
+		<dt>说明</dt><dd>:<%=description%></dd>
 		<dt><a herf='javascript:void(0)' class='ad-edit'>修改</a></dt>
 		<dt><a herf='javascript:void(0)' class='ad-delete'>删除</a></dt>
 	</dl>
@@ -31,11 +31,11 @@ var fileFolderUrl = "<?php echo $this->siteConfig('fileFolderUrl')?>";
 		<dd><input class='value-field icon-selector' data-callback='appendToInput' type='text' name='filename' value='' /></dd>
 <%}%>	
 		<dt>连接地址</dt>
-		<dd><input class='value-field' type='text' name='link' value='{{link}}' /></dd>
+		<dd><input class='value-field' type='text' name='link' value='<%=link%>' /></dd>
 		<dt>标题</dt>
-		<dd><input class='value-field' type='text' name='label' value='{{label}}' /></dd>
+		<dd><input class='value-field' type='text' name='label' value='<%=label%>' /></dd>
 		<dt>说明</dt>
-		<dd><textarea class='value-field' name='description'>{{description}}</textarea></dd>
+		<dd><textarea class='value-field' name='description'><%=description%></textarea></dd>
 		<dd class='action-dd button'>SAVE</dd>
 	<dl>
 </script>
