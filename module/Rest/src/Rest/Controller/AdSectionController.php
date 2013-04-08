@@ -55,5 +55,6 @@ class AdSectionController extends AbstractRestfulController
 		$doc = $co->find($id);
 		$doc->delete();
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
+		return new JsonModel(array('id' => $id));
 	}
 }
