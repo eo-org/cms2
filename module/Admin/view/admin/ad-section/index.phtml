@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/ad.css');?>
 <ul class="ad-section">
 
@@ -54,4 +55,62 @@ var createAdSection = function() {
 		aseView.render().el
 	).showMask();
 }
+=======
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/ad.css');?>
+<ul class="ad-section">
+
+</ul>
+
+<script>
+var fileUrl = "<?php echo $this->siteConfig('fileFolderUrl')?>";
+</script>
+
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/ad-section" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+
+<script type="text/template" id="ad-section">
+	<div class="images">
+	<%
+		for(var i = 0;i < preview.length;i++) {
+	%>
+		<img class="i-<%=i%>" src="<%=fileUrl%>/_thumb/<%=preview[i]%>">
+	<%
+		}
+	%>
+	</div>
+	<div class='label'><%=label%></div>
+	<div class='bb-action'>
+		<a href="javascript:void(0);" class="action-edit">编辑</a>
+		<a href="/admin/ad/index/section-id/<%=id%>">添加广告图</a>
+	</div>
+	<div style="clear:both;"></div>
+</script>
+
+<script type='text/template' id='ad-section-editor'>
+	<div class='editor-title'>新建/修改广告组</div>
+	<dl>
+		<dt>名字</dt>
+		<dd><input class='value-field' type='text' name='label' value='<%=label%>' /></dd>
+		<dd class='action-dd button edit-save'>SAVE</dd>
+	<%
+		if(id != null){
+	%>
+		<dd class='action-dd button edit-delete'>delete</dd>
+	<% } %>
+	<dl>
+</script>
+
+<script>
+var createAdSection = function() {
+	//var template = _.template($("#ad-section-editor").html());
+	adSection = new AdSection();
+	var asEditor = new AdSectionEditorView({
+		model: adSection
+	});
+
+	asEditor.render();
+//	var prompt = Prompt.getInstance().appendEditorContent(
+//		aseView.render().el
+//	).showMask();
+}
+>>>>>>> 64997643ea5106b5ca213d31b296575709120444
 </script>
