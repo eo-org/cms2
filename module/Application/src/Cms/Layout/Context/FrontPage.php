@@ -63,4 +63,13 @@ class FrontPage extends ContextAbstract
 	{
 		return "frontpage";
 	}
+	
+	public function shouldCache()
+	{
+		if($this->layoutDoc->alias == 'search') {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
