@@ -8,7 +8,7 @@ use Zend\Mvc\InjectApplicationEventInterface, Zend\EventManager\EventInterface a
 use Zend\ServiceManager\ServiceLocatorAwareInterface, Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\I18n\Translator\Translator;
 use Zend\EventManager\StaticEventManager, Zend\EventManager\EventManager;
-use Fucms\Session\Admin as SessionAdmin;
+use Cms\Session\Admin as SessionAdmin;
 
 class ApplicationController implements
 	DispatchableInterface,
