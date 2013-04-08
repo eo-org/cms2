@@ -32,26 +32,26 @@ var fileUrl = "<?php echo $this->siteConfig('fileFolderUrl')?>";
 	<dl>
 		<dt>名字</dt>
 		<dd><input class='value-field' type='text' name='label' value='<%=label%>' /></dd>
-		<dd class='action-dd button'>SAVE</dd>
+		<dd class='action-dd button edit-save'>SAVE</dd>
 	<%
 		if(id != null){
 	%>
-		<dd class='action-ss button'>delete</dd>
+		<dd class='action-dd button edit-delete'>delete</dd>
 	<% } %>
 	<dl>
 </script>
 
 <script>
 var createAdSection = function() {
-	var template = _.template($("#ad-section-editor").html());
+	//var template = _.template($("#ad-section-editor").html());
 	adSection = new AdSection();
-	var aseView = new AdSectionEditorView({
+	var asEditor = new AdSectionEditorView({
 		model: adSection
 	});
 
-	
-	var prompt = Prompt.getInstance().appendEditorContent(
-		aseView.render().el
-	).showMask();
+	asEditor.render();
+//	var prompt = Prompt.getInstance().appendEditorContent(
+//		aseView.render().el
+//	).showMask();
 }
 </script>
