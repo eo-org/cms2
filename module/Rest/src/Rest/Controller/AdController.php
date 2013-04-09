@@ -67,7 +67,7 @@ class AdController extends AbstractRestfulController
 		$doc->save();
 		
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
-		return array('id' => $id);		
+		return JsonModel(array('id' => $id));		
 	}
 	
 	public function delete($id)
