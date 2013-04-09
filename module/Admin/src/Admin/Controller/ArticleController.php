@@ -55,7 +55,7 @@ class ArticleController extends AbstractActionController
 					$doc->setAttachments($attaUrl, $attaName, $attaType);
 				}
 	            if(is_null($id)) {
-	            	$fsa = new \Fucms\Session\Admin();
+	            	$fsa = new \Cms\Session\Admin();
 					$doc->created = date('Y-m-d H:i:s');
 					$doc->createdBy = $fsa->getRoleId();
 					$doc->createdByAlias = $fsa->getUserData('loginName');
