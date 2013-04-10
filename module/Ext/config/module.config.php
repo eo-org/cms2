@@ -192,6 +192,10 @@ return array(
 				'Ext_Brick_Player_Player' => array(
 					'label' => '播放器',
 					'desc' => ''
+				),
+				'Ext_Brick_Player_VideoPlayer' => array(
+					'label' => '播放器',
+					'desc' => ''
 				)
 			)
 		)
