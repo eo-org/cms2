@@ -54,15 +54,23 @@ class Front
 		$viewModel		= $controller->layout();
 		$jsList			= $brickRegister->getJsList();
 		$cssList		= $brickRegister->getCssList();
-	
+		
+		$userLayoutDocs = $factory->_m('layout')->addFilter('default', 0)
+			->fetchDoc();
+		
 		$viewModel->setVariables(array(
 			'factory' => $factory,
 			'sessionAdmin' => $sessionAdmin,
 			'layoutFront' => $this,
 			'jsList' => $jsList,
 			'cssList' => $cssList,
+			'userLayoutDocs' => $userLayoutDocs
 		));
 		
+		/*
+		 * @todo move all view model to controller!
+		 * why we have it here in the first place ?
+		 */
 		$siteConfig = $sm->get('ConfigObject\EnvironmentConfig');
 		$fileUrl = $siteConfig->fileFolderUrl;
 		if($sessionAdmin->getUserData('localCssMode') == 'active') {
