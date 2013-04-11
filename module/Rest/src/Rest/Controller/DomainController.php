@@ -10,32 +10,15 @@ Doctrine\ODM\MongoDB\Configuration,
 Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver,
 Doctrine\MongoDB\Connection;
 
-use Document\ServiceAccount\Site;
-
 class DomainController extends AbstractRestfulController
 {
 	public function getList()
 	{
-		/** new connection create **/
-		$config = new Configuration();
-		
-		$config->setProxyDir(BASE_PATH . '/cms2/doctrineCache');
-		$config->setProxyNamespace('DoctrineMongoProxy');
-		$config->setHydratorDir(BASE_PATH . '/cms2/doctrineCache');
-		$config->setHydratorNamespace('DoctrineMongoHydrator');
-		$config->setMetadataDriverImpl(AnnotationDriver::create(BASE_PATH.'/class'));
-		
-		$config->setAutoGenerateHydratorClasses(true);
-		$config->setAutoGenerateProxyClasses(true);
-		
-		$accountServer = $this->siteConfig('accountServer');
-		$dm = DocumentManager::create(new Connection($accountServer['server']), $config);
-		PersistentObject::setObjectManager($dm);
-		/** END new connection create **/
+		$dm = $this->connect();
 		
 		$remoteSiteId = $this->siteConfig('remoteSiteId');
 		
-		$site = $dm->createQueryBuilder('Document\ServiceAccount\Site')
+		$site = $dm->createQueryBuilder('ServiceAccount\Document\Site')
 			->field('_id')->equals($remoteSiteId)
 			->hydrate(false)
 			->getQuery()
@@ -56,22 +39,7 @@ class DomainController extends AbstractRestfulController
 	
 	public function create($data)
 	{
-		/** new connection create **/
-		$config = new Configuration();
-		
-		$config->setProxyDir(BASE_PATH . '/cms2/doctrineCache');
-		$config->setProxyNamespace('DoctrineMongoProxy');
-		$config->setHydratorDir(BASE_PATH . '/cms2/doctrineCache');
-		$config->setHydratorNamespace('DoctrineMongoHydrator');
-		$config->setMetadataDriverImpl(AnnotationDriver::create(BASE_PATH.'/class'));
-		
-		$config->setAutoGenerateHydratorClasses(true);
-		$config->setAutoGenerateProxyClasses(true);
-		
-		$accountServer = $this->siteConfig('accountServer');
-		$dm = DocumentManager::create(new Connection($accountServer['server']), $config);
-		PersistentObject::setObjectManager($dm);
-		/** END new connection create **/
+		$dm = $this->connect();
 		
 		$globalSiteId = $this->siteConfig('globalSiteId');
 		//$dm = $this->documentManager();
@@ -80,26 +48,26 @@ class DomainController extends AbstractRestfulController
 		$dataArr = Json::decode($dataStr, Json::TYPE_ARRAY);
 		
 		$domainName = $dataArr['domainName'];
-		$site = $dm->createQueryBuilder('Document\ServiceAccount\Site')
+		$site = $dm->createQueryBuilder('ServiceAccount\Document\Site')
 			->field('domains.domainName')->equals($domainName)
 			->getQuery()
 			->getSingleResult();
 		
 		if($site !== null) {
 			$this->getResponse()->getHeaders()->addHeaderLine('result', 'failed');
-			return "域名".$domainName."已经绑定其他网站!请联系客服.";
+			return new JsonModel(array('message' => "域名".$domainName."已经绑定其他网站!请联系客服."));
 		}
 		
-		$site = $dm->createQueryBuilder('Document\ServiceAccount\Site')
+		$site = $dm->createQueryBuilder('ServiceAccount\Document\Site')
 			->field('globalSiteId')->equals($globalSiteId)
 			->getQuery()
 			->getSingleResult();
 		$domains = $site->getDomains();
 		if(count($domains) >= 4) {
 			$this->getResponse()->getHeaders()->addHeaderLine('result', 'failed');
-			return "单个网站最多绑定3个域名";
+			return new JsonModel(array('message' => 单个网站最多绑定3个域名));
 		}
-		$domain = new \Document\ServiceAccount\Domain();
+		$domain = new \ServiceAccount\Document\Domain();
 		$domain->setFromArray($dataArr);
 		
 		$site->addDomain($domain);
@@ -107,7 +75,7 @@ class DomainController extends AbstractRestfulController
 		$dm->flush();
 		
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
-		return $domain->getId();
+		return new JsonModel(array('id' => $domain->getId()));
 	}
 	
 	public function update($id, $data)
@@ -117,27 +85,12 @@ class DomainController extends AbstractRestfulController
 	
 	public function delete($id)
 	{
-		/** new connection create **/
-		$config = new Configuration();
-		
-		$config->setProxyDir(BASE_PATH . '/cms2/doctrineCache');
-		$config->setProxyNamespace('DoctrineMongoProxy');
-		$config->setHydratorDir(BASE_PATH . '/cms2/doctrineCache');
-		$config->setHydratorNamespace('DoctrineMongoHydrator');
-		$config->setMetadataDriverImpl(AnnotationDriver::create(BASE_PATH.'/class'));
-		
-		$config->setAutoGenerateHydratorClasses(true);
-		$config->setAutoGenerateProxyClasses(true);
-		
-		$accountServer = $this->siteConfig('accountServer');
-		$dm = DocumentManager::create(new Connection($accountServer['server']), $config);
-		PersistentObject::setObjectManager($dm);
-		/** END new connection create **/
+		$dm = $this->connect();
 		
 		$remoteSiteId = $this->siteConfig('remoteSiteId');
 		//$dm = $this->documentManager();
 		
-		$site = $dm->createQueryBuilder('Document\ServiceAccount\Site')
+		$site = $dm->createQueryBuilder('ServiceAccount\Document\Site')
 			->field('_id')->equals($remoteSiteId)
 			->getQuery()
 			->getSingleResult();
@@ -151,5 +104,33 @@ class DomainController extends AbstractRestfulController
 			$this->getResponse()->getHeaders()->addHeaderLine('result', 'failed');
 			$this->getResponse()->getHeaders()->addHeaderLine('responseText', "default domain or domain not found!");
 		}
+		return new JsonModel(array('id' => $id));
+	}
+	
+	public function connect()
+	{
+		/** new connection create **/
+		$config = new Configuration();
+		
+		$config->setProxyDir(BASE_PATH . '/cms2/doctrineCache');
+		$config->setProxyNamespace('DoctrineMongoProxy');
+		$config->setHydratorDir(BASE_PATH . '/cms2/doctrineCache');
+		$config->setHydratorNamespace('DoctrineMongoHydrator');
+		$config->setMetadataDriverImpl(AnnotationDriver::create(BASE_PATH.'/class'));
+		
+		$config->setAutoGenerateHydratorClasses(true);
+		$config->setAutoGenerateProxyClasses(true);
+		
+		$accountServer = $this->siteConfig('accountServer');
+		$connection = new Connection(CENTER_DB, array(
+			'username' => 'craftgavin',
+			'password' => 'whothirstformagic?',
+			'db' => 'admin'
+		));
+		$connection->initialize();
+		$dm = DocumentManager::create($connection, $config);
+		PersistentObject::setObjectManager($dm);
+		/** END new connection create **/
+		return $dm;
 	}
 }

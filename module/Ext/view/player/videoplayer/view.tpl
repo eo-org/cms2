@@ -50,7 +50,8 @@
 			});
         },
         swfPath: "/js/Jplayer.swf",
-        supplied: "m4v"
+        supplied: "m4v",
+        size: {width: '1000px', height: '390px'}
 		});
 	});
 </script>

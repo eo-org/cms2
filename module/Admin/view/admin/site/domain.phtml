@@ -30,8 +30,8 @@
 		<a class='edit-save button' href='javascript:void(0)'>保存</a>
 		<%} else {%>
 		<div><%= domainName %></div>
-		<a class='edit-save button' href='javascript:void(0)'>保存</a>
-		<a class='edit-delete button' href='javascript:void(0)'>解除绑定</a>
+		<a class='edit-save action-dd button' href='javascript:void(0)'>保存</a>
+		<a class='edit-delete action-dd button' href='javascript:void(0)'>解除绑定</a>
 		<%}%>
 	<%}%>
 	</div>
@@ -40,14 +40,11 @@
 
 <script>
 var bindDomain = function(){
-	var template = _.template($("#domain-editor").html());
 	domain = new Domain();
 	var domainEditorView = new DomainEditorView({
 		model: domain
 	});
 	
-	var prompt = Prompt.getInstance().appendEditorContent(
-		domainEditorView.render().el
-	).showMask();
+	domainEditorView.render();
 }
 </script>
