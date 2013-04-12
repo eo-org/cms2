@@ -24,6 +24,9 @@ class Plain extends AbstractExt
     
     public function getTplList()
     {
-    	return array('view' => 'adgroup\plain\view.tpl');
+    	return array(
+    		'view' => 'adgroup\plain\view.tpl',
+    		'carouFredSel' => 'adgroup\plain\carouFredSel.tpl'
+    	);
     }
 }

@@ -31,7 +31,7 @@ class HeadFileController extends AbstractRestfulController
 		$doc->save();
 		
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
-		return array('id' => $doc->getId());		
+		return new JsonModel(array('id' => $doc->getId()));		
 	}
 	
 	public function update($id, $data)
@@ -46,7 +46,7 @@ class HeadFileController extends AbstractRestfulController
 		$doc->save();
 		
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
-		return array('id' => $id);
+		return new JsonModel(array('id' => $id));
 	}
 	
 	public function delete($id)
@@ -56,5 +56,6 @@ class HeadFileController extends AbstractRestfulController
 		$doc = $co->find($id);
 		$doc->delete();
 		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
+		return new JsonModel(array('id' => $id));
 	}
 }

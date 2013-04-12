@@ -43,13 +43,10 @@
 
 <script>
 var createFile = function(){
-	var LinkModel = new HeadFile();
-	var createFile = new HeadFileEditView({
-		model:LinkModel
+	var linkModel = new HeadFile();
+	var hfEditor = new HeadFileEditView({
+		model:linkModel
 	});
-	createFile.render().el;
+	hfEditor.render();
 }
-$('.create-file').click(function(){
-	createFile();
-});
 </script>
