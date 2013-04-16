@@ -14,10 +14,8 @@ window.SITE_FOLDER = "{{ siteConfig('remoteSiteId') }}";
 </script>
 
 {% if sessionAdmin.hasPrivilege %}
-<!-- script type="text/javascript" src="{{ siteConfig('extUrl') }}/src/underscore.1.3.1.min.js"></script>
-<script type="text/javascript" src="{{ siteConfig('extUrl') }}/src/backbone.0.9.1.min.js"></script -->
-
-
+<script type="text/javascript" src="{{ siteConfig('extUrl') }}/src/underscore.1.3.1.min.js"></script>
+<script type="text/javascript" src="{{ siteConfig('extUrl') }}/src/backbone.0.9.1.min.js"></script>
 <!--link	type="text/css"			href="http://minify.enorange.cn/?b=resource/cms/v4/admin/style&f=structure.css,front.css" media="screen" rel="stylesheet" -->
 <link type="text/css" href="{{ siteConfig('libUrl') }}/admin/style/structure.css" media="screen" rel="stylesheet">
 <link type="text/css" href="{{ siteConfig('libUrl') }}/admin/style/front.css" media="screen" rel="stylesheet">
@@ -26,7 +24,7 @@ window.SITE_FOLDER = "{{ siteConfig('remoteSiteId') }}";
 <script type="text/javascript"	src="{{ siteConfig('extUrl') }}/jquery.ndd.js"></script>
 <script type="text/javascript"	src="{{ siteConfig('libUrl') }}/script/front.js"></script>
 <script type="text/javascript"	src="{{ siteConfig('libUrl') }}/script/lightbox.js"></script>
-<!-- script type="text/javascript"	src="{{ siteConfig('libUrl') }}/script/bootstrap.js"></script -->
+<script type="text/javascript"	src="{{ siteConfig('libUrl') }}/script/bootstrap.js"></script>
 <script type="text/javascript"	src="{{ siteConfig('libUrl') }}/script/icon-selector.js"></script>
 <script type="text/javascript"	src="{{ siteConfig('libUrl') }}/script/codemirror.js"></script>
 
