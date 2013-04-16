@@ -8,6 +8,7 @@ class FrontPage extends ContextAbstract
 	protected $shouldCache = true;
 	
 	protected $type;
+	protected $trail = array();
 	
 	public function init($id, $presetLayoutDoc = null)
 	{
@@ -20,6 +21,8 @@ class FrontPage extends ContextAbstract
 					->fetchOne();
 				if($layoutDoc == null) {
 					$layoutDoc = $this->createDefaultLayout($id);
+				} else {
+					$this->trail = array(array('id' => 'main-index'));
 				}
 			} else if($id == 'error-page') {
 				$layoutDoc = $layoutCo->addFilter('type', 'error-page')
