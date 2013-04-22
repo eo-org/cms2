@@ -26,7 +26,8 @@ class Plain extends AbstractExt
     {
     	return array(
     		'view' => 'adgroup\plain\view.tpl',
-    		'carouFredSel' => 'adgroup\plain\carouFredSel.tpl'
+    		'carouFredSel' => 'adgroup\plain\carouFredSel.tpl',
+    		'roundabout' => 'adgroup\plain\roundabout.tpl'
     	);
     }
 }
