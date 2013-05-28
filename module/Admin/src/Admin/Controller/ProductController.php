@@ -65,7 +65,11 @@ class ProductController extends AbstractActionController
             throw new Class_Exception_AccessDeny('没有权限访问此内容，或者产品id不存在');
         }
 		
-		$attributesetDoc = $dm->getRepository('Cms\Document\Attributeset')->findOneById($attributesetId);
+        if(is_null($attributesetId)) {
+        	$attributesetDoc = null;
+        } else {
+			$attributesetDoc = $dm->getRepository('Cms\Document\Attributeset')->findOneById($attributesetId);
+        }
 		if(!is_null($attributesetDoc)) {
 			$attrList = $attributesetDoc->getAttributeList();
 		} else {

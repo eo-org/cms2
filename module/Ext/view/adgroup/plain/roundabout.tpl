@@ -7,3 +7,10 @@
 	</li>
 {% endfor %}
 </ul>
+<script type='javascript'>
+$(document).ready(function() {
+	$('ul#roundabout-items').roundabout({
+	
+	});
+});
+</script>
