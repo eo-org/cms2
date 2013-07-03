@@ -7,7 +7,7 @@ class EditForm extends Form
 {
 	public $tabSettings = array(
 		array('label', 'name', 'groupId', 'sku', 'fulltext', 'appendImage', 'price', 'status', 'attributes'),
-		array('introtext', 'metakey', 'sort', 'introicon')
+		array('introtext', 'metakey', 'weight', 'introicon')
 	);
 	
 	public $attributesFieldset;
@@ -88,7 +88,7 @@ class EditForm extends Form
     		'options' => array('label' => '产品关键词')
         ));
         $this->add(array(
-        	'name' => 'sort',
+        	'name' => 'weight',
         	'attributes' => array('type' => 'text', 'value' => 1),
         	'options' => array('label' => '权重', 'description' => '-10000 ~ 10000, 数字越小排序越靠前'),
         ));
