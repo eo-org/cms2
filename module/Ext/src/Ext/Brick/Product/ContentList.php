@@ -33,7 +33,7 @@ class ContentList extends AbstractExt
 			$factory = $this->dbFactory();
 				
 			$co = $factory->_m('Product');
-			$co->setFields(array('id', 'name', 'sku', 'label', 'introicon', 'introtext', 'price', 'attributeDetail', 'attachment'))
+			$co->setFields(array('id', 'name', 'sku', 'label', 'introicon', 'introtext', 'price', 'attributeDetail', 'attachment', 'weight'))
 				->addFilter('groupId', $groupId)
 				->addFilter('status', 'publish')
 				->setPage($page)
@@ -43,9 +43,10 @@ class ContentList extends AbstractExt
 					$co->sort('weight', 1);
 					break;
 				case 'sc':
+					$co->sort('_id', -1);
 					break;
 				case 'sn':
-					$co->sort('name', 1);
+					$co->sort('label', 1);
 					break;
 			}
 			
