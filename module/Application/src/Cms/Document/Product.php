@@ -46,7 +46,7 @@ class Product extends AbstractDocument
 	protected $metakey;
 	
 	/** @ODM\Field(type="int")  */
-	protected $sort;
+	protected $weight;
 	
 	/** @ODM\Field(type="hash")  */
 	protected $attachment;
