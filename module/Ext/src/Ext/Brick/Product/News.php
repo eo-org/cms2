@@ -19,7 +19,7 @@ class News extends AbstractExt
     		$title = $groupDoc->label;
     	}
 		$co = $factory->_m('Product');
-		$co->setFields(array('id', 'name', 'sku', 'label', 'introicon', 'introtext', 'price'))
+		$co->setFields(array('id', 'name', 'sku', 'label', 'introicon', 'introtext', 'price', 'attachment'))
 			->addFilter('status', 'publish')
 			->setPagesize($this->getParam('limit'))
 			->setPage(1)
