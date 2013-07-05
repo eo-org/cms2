@@ -119,7 +119,7 @@ class Product extends AbstractDocument
 		
 		$this->metakey = $data['metakey'];
 		
-		$this->sort = $data['sort'];
+		$this->weight = $data['weight'];
 		
 		$this->attributes = $data['attributes'];
 		
