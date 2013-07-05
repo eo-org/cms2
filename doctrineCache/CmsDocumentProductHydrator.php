@@ -116,11 +116,11 @@ class CmsDocumentProductHydrator implements HydratorInterface
         }
 
         /** @Field(type="int") */
-        if (isset($data['sort'])) {
-            $value = $data['sort'];
+        if (isset($data['weight'])) {
+            $value = $data['weight'];
             $return = (int) $value;
-            $this->class->reflFields['sort']->setValue($document, $return);
-            $hydratedData['sort'] = $return;
+            $this->class->reflFields['weight']->setValue($document, $return);
+            $hydratedData['weight'] = $return;
         }
 
         /** @Field(type="hash") */
