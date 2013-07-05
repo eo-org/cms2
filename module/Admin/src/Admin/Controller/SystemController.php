@@ -12,6 +12,19 @@ class SystemController extends AbstractActionController
 			->setActionTitle('系统管理');
 	}
 	
+	public function clearAllCacheAction()
+	{
+		$this->brickConfig()->setActionMenu(array())
+			->setActionTitle('清除页面缓存');
+		
+		$dm = $this->documentManager();
+		$qb = $dm->createQueryBuilder('Cms\Document\Cache');
+		
+		$qb->remove()->getQuery()->execute();
+		
+		return array();
+	}
+	
 	public function headFileAction()
 	{
 		$this->brickConfig()->setActionMenu(array())
