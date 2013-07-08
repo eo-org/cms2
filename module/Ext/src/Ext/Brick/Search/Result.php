@@ -32,11 +32,19 @@ class Result extends AbstractExt
     		if(is_null($type) || $type == 'product') {
     			$type = 'product';
     			$co = $factory->_m('Product');
-    			$co->setFields(array('label', 'introtext', 'introicon', 'attributeDetail', 'created'))
-    				->addFilter('$or', array(
+    			$co->setFields(array('label', 'name', 'sku', 'introtext', 'introicon', 'attributeDetail', 'created'));
+    			
+    			if(isset($params['field']) && 
+    				in_array($params['field'], array('label', 'name', 'sku'))
+    			) {
+    				$co->addFilter($params['field'], new MongoRegex("/^".$keywords."/i"));
+    			} else {
+    				$co->addFilter('$or', array(
     					array('label' => new MongoRegex("/".$keywords."/i")),
     					array('name' =>	new MongoRegex("/^".$keywords."/i")),
-    				))->setPage($page)
+    				));
+    			}
+    				$co->setPage($page)
     				->setPageSize($pageSize);
     		} else {
     			$co = $factory->_m('Article');
