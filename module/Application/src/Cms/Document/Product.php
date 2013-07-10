@@ -60,6 +60,15 @@ class Product extends AbstractDocument
 	/** @ODM\Field(type="string")  */
 	protected $status = 'publish';
 	
+	/** @ODM\Field(type="date")  */
+	protected $publishDate;
+	
+	/** @ODM\Field(type="date")  */
+	protected $modified;
+	
+	/** @ODM\Field(type="date")  */
+	protected $created;
+	
 	protected $attributesetDoc;
 	
 	public function setAttributesetDoc($attributesetDoc)
@@ -123,9 +132,37 @@ class Product extends AbstractDocument
 		
 		$this->attributes = $data['attributes'];
 		
+		$this->attributesLabel = $this->setAttributesLabel();
+		
 		$this->status = $data['status'];
 		
-		$this->attributesLabel = $this->setAttributesLabel();
+		$this->publishDate = new \DateTime($data['publishDate']);
+	}
+	
+	public function getArrayCopy()
+	{
+		if(is_null($this->publishDate)) {
+			$this->publishDate = new \DateTime();
+		}
+		return array(
+				'groupId' => $this->groupId,
+				'label' => $this->label,
+				'name' => $this->name,
+				'sku' => $this->sku,
+				'price' => $this->price,
+				'fulltext' => $this->fulltext,
+				'introicon' => $this->introicon,
+				'introtext' => $this->introtext,
+				'metakey' => $this->metakey,
+				'weight' => $this->weight,
+				'status' => $this->status,
+				'publishDate' => $this->publishDate->format('Y-m-d')
+		);
+	}
+	
+	public function timestamp($stamper)
+	{
+		$stamper->stamp($this);
 	}
 	
 	private function setAttributesLabel()

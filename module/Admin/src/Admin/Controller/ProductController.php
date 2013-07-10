@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use Cms\Document\Product;
-
+use Cms\Func\TimeStamper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Admin\Form\Product\EditForm;
 
@@ -60,6 +60,7 @@ class ProductController extends AbstractActionController
         	$doc = $dm->getRepository('Cms\Document\Product')->findOneById($id);
         	$attributesetId = $doc->getAttributesetId();
         }
+        $doc->timestamp(new TimeStamper());
         
         if(is_null($doc)) {
             throw new Class_Exception_AccessDeny('没有权限访问此内容，或者产品id不存在');
@@ -82,7 +83,7 @@ class ProductController extends AbstractActionController
 			$el = $attr->getFormElement();
 			$fs->add($el);
 		}
-		$form->setData($doc->toArray());
+		$form->setData($doc->getArrayCopy());
 		
 		if($this->getRequest()->isPost()) {
 			$postData = $this->getRequest()->getPost();

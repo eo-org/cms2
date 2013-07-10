@@ -26,6 +26,8 @@
 <?php echo $this->tabForm($this->form, array(array('handleLabel' => '图片和附件', 'content' => $content)))?>
 
 <script>
+	$( ".date-picker" ).datepicker({dateFormat: 'yy-mm-dd'});
+
 	var tmp = jQuery.parseJSON('{"obj" : <?php echo \Zend\Json\Json::encode($this->product->getAttachment())?>}');
 	var attachmentBackboneSourceObj = tmp.obj;
 	var xTime = "<?php echo $this->time?>";

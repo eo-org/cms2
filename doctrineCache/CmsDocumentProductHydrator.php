@@ -154,6 +154,30 @@ class CmsDocumentProductHydrator implements HydratorInterface
             $this->class->reflFields['status']->setValue($document, $return);
             $hydratedData['status'] = $return;
         }
+
+        /** @Field(type="date") */
+        if (isset($data['publishDate'])) {
+            $value = $data['publishDate'];
+            if ($value instanceof \MongoDate) { $date = new \DateTime(); $date->setTimestamp($value->sec); $return = $date; } else { $return = new \DateTime($value); }
+            $this->class->reflFields['publishDate']->setValue($document, clone $return);
+            $hydratedData['publishDate'] = $return;
+        }
+
+        /** @Field(type="date") */
+        if (isset($data['modified'])) {
+            $value = $data['modified'];
+            if ($value instanceof \MongoDate) { $date = new \DateTime(); $date->setTimestamp($value->sec); $return = $date; } else { $return = new \DateTime($value); }
+            $this->class->reflFields['modified']->setValue($document, clone $return);
+            $hydratedData['modified'] = $return;
+        }
+
+        /** @Field(type="date") */
+        if (isset($data['created'])) {
+            $value = $data['created'];
+            if ($value instanceof \MongoDate) { $date = new \DateTime(); $date->setTimestamp($value->sec); $return = $date; } else { $return = new \DateTime($value); }
+            $this->class->reflFields['created']->setValue($document, clone $return);
+            $hydratedData['created'] = $return;
+        }
         return $hydratedData;
     }
 }

@@ -7,7 +7,7 @@ class EditForm extends Form
 {
 	public $tabSettings = array(
 		array('label', 'name', 'groupId', 'sku', 'fulltext', 'appendImage', 'price', 'status', 'attributes'),
-		array('introtext', 'metakey', 'weight', 'introicon')
+		array('publishDate', 'introtext', 'metakey', 'weight', 'introicon')
 	);
 	
 	public $attributesFieldset;
@@ -77,6 +77,11 @@ class EditForm extends Form
     		'options' => array('label' => '产品单价')
     	));
     	
+    	$this->add(array(
+    		'name' => 'publishDate',
+    		'attributes' => array('type' => 'text', 'class' => 'date-picker', 'readonly' => 'readonly'),
+    		'options' => array('label' => '发布日期')
+    	));
     	$this->add(array(
     		'name' => 'introtext',
     		'attributes' => array('type' => 'textarea'),
