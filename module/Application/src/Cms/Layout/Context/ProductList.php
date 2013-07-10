@@ -20,7 +20,7 @@ class ProductList extends ContextAbstract
 	{
 		$groupItemCo = $this->dbFactory->_m('Group_Item');
 		$groupItemDoc = $groupItemCo->addFilter('$or', array(
-				array('_id' => $id),
+				array('_id' => new MongoId($id)),
 				array('alias' => $id)
 			))->fetchOne();
 		if($groupItemDoc == null) {
