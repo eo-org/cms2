@@ -19,10 +19,13 @@ class ArticleList extends ContextAbstract
 	public function init($id, $presetLayoutDoc = null)
 	{
 		$groupItemCo = $this->dbFactory->_m('Group_Item');
-		$groupItemDoc = $groupItemCo->addFilter('$or', array(
-				array('_id' => new MongoId($id)),
-				array('alias' => $id)
-			))->fetchOne();
+		$regex = '/^[0-9a-z]{24}$/';
+        if (preg_match($regex, $id)) {
+        	$groupItemCo->addFilter('_id', new MongoId($id));
+        } else {
+        	$groupItemCo->addFilter('alias', $id);
+        }
+		$groupItemDoc = $groupItemCo->fetchOne();
 		if($groupItemDoc == null) {
 			$groupItemId = 0;
 		} else {
