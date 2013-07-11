@@ -74,6 +74,12 @@ class Attribute extends \Cms\Document\Attribute implements \Doctrine\ODM\MongoDB
         return parent::getArrayCopy();
     }
 
+    public function isNew()
+    {
+        $this->__load();
+        return parent::isNew();
+    }
+
     public function setFromArray($dataArray)
     {
         $this->__load();
