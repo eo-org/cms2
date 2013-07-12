@@ -59,7 +59,11 @@ class ContentList extends AbstractExt
 			}
 			$dataSize = $co->count();
 			$data = $co->fetchDoc();
-			 
+			foreach($data as $dataRow) {
+				if(is_object($dataRow->publishDate)) {
+					$dataRow->publishDate = date('Y-m-d', $dataRow->publishDate->sec);;
+				}
+			}
 			$paginator = new Paginator(new NullAdapter($dataSize));
 			Paginator::setDefaultScrollingStyle('Sliding');
 			$paginator->setCurrentPageNumber($page)
