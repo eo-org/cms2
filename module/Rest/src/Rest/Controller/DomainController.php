@@ -63,9 +63,9 @@ class DomainController extends AbstractRestfulController
 			->getQuery()
 			->getSingleResult();
 		$domains = $site->getDomains();
-		if(count($domains) >= 4) {
+		if(count($domains) >= 5) {
 			$this->getResponse()->getHeaders()->addHeaderLine('result', 'failed');
-			return new JsonModel(array('message' => 单个网站最多绑定3个域名));
+			return new JsonModel(array('message' => 单个网站最多绑定4个域名));
 		}
 		$domain = new \ServiceAccount\Document\Domain();
 		$domain->setFromArray($dataArr);

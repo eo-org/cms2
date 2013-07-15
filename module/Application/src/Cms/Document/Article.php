@@ -6,32 +6,20 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** 
  * @ODM\Document(
- * 		collection="product"
+ * 		collection="article"
  * )
  * 
  * */
-class Product extends AbstractDocument
-{
+class Article extends AbstractDocument
+{	
 	/** @ODM\Id */
 	protected $id;
-	
-	/** @ODM\Field(type="string")  */
-	protected $attributesetId;
 	
 	/** @ODM\Field(type="string")  */
 	protected $groupId;
 	
 	/** @ODM\Field(type="string")  */
 	protected $label;
-	
-	/** @ODM\Field(type="string")  */
-	protected $name;
-	
-	/** @ODM\Field(type="string")  */
-	protected $sku;
-	
-	/** @ODM\Field(type="float")  */
-	protected $price;
 	
 	/** @ODM\Field(type="string")  */
 	protected $fulltext;
@@ -45,17 +33,8 @@ class Product extends AbstractDocument
 	/** @ODM\Field(type="string")  */
 	protected $metakey;
 	
-	/** @ODM\Field(type="int")  */
-	protected $weight;
-	
 	/** @ODM\Field(type="hash")  */
 	protected $attachment;
-	
-	/** @ODM\Field(type="hash")  */
-	protected $attributes;
-	
-	/** @ODM\Field(type="hash")  */
-	protected $attributesLabel;
 	
 	/** @ODM\Field(type="string")  */
 	protected $status = 'publish';
@@ -81,8 +60,6 @@ class Product extends AbstractDocument
 	/** @ODM\Field(type="string")  */
 	protected $createdByAlias;
 	
-	protected $attributesetDoc;
-	
 	public function toggleTrash()
 	{
 		if($this->status == 'trash') {
@@ -106,7 +83,7 @@ class Product extends AbstractDocument
 		if(count($urlArr) != count($nameArr) || count($urlArr) != count($typeArr)) {
 			throw new Exception('attachment count does not match each other!');
 		}
-	
+
 		$attachment = array();
 		foreach($typeArr as $key => $type) {
 			$attachment[] = array('filetype' => $type, 'filename' => $nameArr[$key], 'urlname' => $urlArr[$key]);
@@ -114,23 +91,11 @@ class Product extends AbstractDocument
 		$this->attachment = $attachment;
 	}
 	
-	public function setAttributesetDoc($attributesetDoc)
-	{
-		$this->attributesetDoc = $attributesetDoc;
-		return $this;
-	}
-	
 	public function exchangeArray($data)
-	{
+	{	
 		$this->groupId = $data['groupId'];
 		
 		$this->label = $data['label'];
-		
-		$this->name = $data['name'];
-		
-		$this->sku = $data['sku'];
-		
-		$this->price = $data['price'];
 		
 		$this->fulltext = $data['fulltext'];
 		
@@ -139,12 +104,6 @@ class Product extends AbstractDocument
 		$this->introtext = $data['introtext'];
 		
 		$this->metakey = $data['metakey'];
-		
-		$this->weight = $data['weight'];
-		
-		$this->attributes = $data['attributes'];
-		
-		$this->attributesLabel = $this->setAttributesLabel();
 		
 		$this->status = $data['status'];
 		
@@ -159,14 +118,10 @@ class Product extends AbstractDocument
 		return array(
 			'groupId' => $this->groupId,
 			'label' => $this->label,
-			'name' => $this->name,
-			'sku' => $this->sku,
-			'price' => $this->price,
 			'fulltext' => $this->fulltext,
 			'introicon' => $this->introicon,
 			'introtext' => $this->introtext,
 			'metakey' => $this->metakey,
-			'weight' => $this->weight,
 			'status' => $this->status,
 			'publishDate' => $this->publishDate->format('Y-m-d')
 		);
@@ -175,23 +130,5 @@ class Product extends AbstractDocument
 	public function timestamp($stamper)
 	{
 		$stamper->stamp($this);
-	}
-	
-	private function setAttributesLabel()
-	{
-		if(is_null($this->attributesetDoc)) {
-			return;
-		}
-		$labels = array();
-		foreach($this->attributes as $attrCode => $optKey) {
-			$attribute = $this->attributesetDoc->getAttributeByCode($attrCode);
-			$fieldLabel = $attribute->getLabel();
-			$valueLabel = $attribute->getOptionLabel($optKey);
-			$labels[$attrCode] = array(
-				'field' => $fieldLabel,
-				'value' => $valueLabel
-			);
-		}
-		return $labels;
 	}
 }

@@ -5,6 +5,11 @@ use Zend\Form\Form;
 
 class EditForm extends Form
 {
+	public $tabSettings = array(
+    	array('label', 'groupId', 'fulltext', 'appendImage', 'status'),
+    	array('publishDate', 'introtext', 'metakey', 'introicon')
+    );
+	
     public function __construct()
     {
     	parent::__construct('article-edit');
@@ -40,10 +45,11 @@ class EditForm extends Form
     		'name' => 'status',
     		'attributes' => array('type' => 'hidden', 'value' => 'publish')
     	));
+    	
     	$this->add(array(
-    		'name' => 'created',
-    		'attributes' => array('type' => 'text'),
-    		'options' => array('label' => '创建时间')
+    		'name' => 'publishDate',
+    		'attributes' => array('type' => 'text', 'class' => 'date-picker', 'readonly' => 'readonly'),
+    		'options' => array('label' => '发布日期')
     	));
     	$this->add(array(
     		'name' => 'introtext',
@@ -64,8 +70,8 @@ class EditForm extends Form
     public function getTabSettings()
     {
     	return array(
-    		array('handleLabel' => '基本信息', 'content' => array('label', 'groupId', 'fulltext', 'appendImage', 'status')),
-    		array('handleLabel' => '选填信息', 'content' => array('created', 'introtext', 'metakey', 'introicon'))
+			array('handleLabel' => '基本信息', 'content' => $this->tabSettings[0]),
+			array('handleLabel' => '选填信息', 'content' => $this->tabSettings[1])
     	);
     }
 }

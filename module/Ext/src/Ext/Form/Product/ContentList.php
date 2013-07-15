@@ -24,6 +24,7 @@ class ContentList extends Fieldset
     		'options' => array(
     			'label' => '产品默认排序',
     			'value_options' => array(
+    				'pd' => '发布日期',
 	        		'sw' => '权重排序',
 	        		'sc' => '产品添加顺序',
 	        		'sn' => '产品名排序'

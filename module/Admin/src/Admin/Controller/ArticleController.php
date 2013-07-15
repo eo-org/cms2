@@ -1,6 +1,8 @@
 <?php
 namespace Admin\Controller;
 
+use Cms\Document\Article;
+use Cms\Func\TimeStamper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Admin\Form\Article\EditForm;
 
@@ -30,38 +32,36 @@ class ArticleController extends AbstractActionController
     	$items = $groupDoc->toMultioptions('label');
     	$form->get('groupId')->setValueOptions($items);
     	
-    	$co = $factory->_m('Article');
-        $doc = null;
-        if(empty($id)) {
-            $doc = $co->create();
-        } else {
-        	$doc = $co->find($id);
-        }
+    	$dm = $this->documentManager();
+    	$doc = null;
+    	if(empty($id)) {
+    		$doc = new Article();
+    	} else {
+    		$doc = $dm->getRepository('Cms\Document\Article')->findOneById($id);
+    	}
         if(is_null($doc)) {
             throw new Class_Exception_AccessDeny('没有权限访问此内容，或者内容id不存在');
         }
-    	$form->setData($doc->toArray());
-        //$attachmentArr = $doc->attachment;
+        
+    	$doc->timestamp(new TimeStamper());
+    	$form->setData($doc->getArrayCopy());
+    	
         if($this->getRequest()->isPost()) {
         	$postData = $this->getRequest()->getPost();
         	$form->setData($postData);
+        	
         	if($form->isValid()) {
-	        	$doc->setFromArray($form->getData());
+	        	$doc->exchangeArray($form->getData());
 	    		$attaUrl	= $postData->get('attaUrl');
 				$attaName	= $postData->get('attaName');
 				$attaType	= $postData->get('attaType');
-				$doc->attachment = null;
+				$doc->clearAttachment();
 				if(!is_null($attaUrl)) {
-					$doc->setAttachments($attaUrl, $attaName, $attaType);
+					$doc->setAttachment($attaUrl, $attaName, $attaType);
 				}
-	            if(is_null($id)) {
-	            	$fsa = new \Cms\Session\Admin();
-					$doc->created = date('Y-m-d H:i:s');
-					$doc->createdBy = $fsa->getRoleId();
-					$doc->createdByAlias = $fsa->getUserData('loginName');
-	            }
-	            $doc->save();
-	            $this->flashMessenger()->addMessage('文章:'.$doc->label.' 已经成功保存');
+	            $dm->persist($doc);
+				$dm->flush();
+	            $this->flashMessenger()->addMessage('文章:'.$doc->getLabel().' 已经成功保存');
 	            return $this->redirect()->toRoute('admin/actionroutes/wildcard', array('action' => 'index', 'controller' => 'article'));
         	}
         }
@@ -81,7 +81,7 @@ class ArticleController extends AbstractActionController
 			$this->actionTitle = '新建文章';
 			$this->actionMenu = array('save');
 		} else {
-			$this->actionTitle = '编辑文章: '.$doc->label;
+			$this->actionTitle = '编辑文章: '.$doc->getLabel();
 			$this->actionMenu = array('save', 'delete');
 		}
 		return array(

@@ -9,7 +9,7 @@
 	<div class=''>
 		<h4>当前缩略图</h4>
 		<div class='introicon'>
-			<img class='introicon-img' src='<?php echo $this->outputImage($this->article->introicon)?>' />
+			<img class='introicon-img' src='<?php echo $this->outputImage($this->article->getIntroicon())?>' />
 		</div>
 		<div class='clear'></div>
 	</div>
@@ -26,7 +26,11 @@
 <?php echo $this->tabForm($this->form, array(array('handleLabel' => '图片和附件', 'content' => $content)))?>
 
 <script>
-	var tmp = jQuery.parseJSON('{"obj" : <?php echo \Zend\Json\Json::encode($this->article->attachment)?>}');
+	$(document).ready(function() {
+		$( ".date-picker" ).datepicker({dateFormat: 'yy-mm-dd'});
+	});
+
+	var tmp = jQuery.parseJSON('{"obj" : <?php echo \Zend\Json\Json::encode($this->article->getAttachment())?>}');
 	var attachmentBackboneSourceObj = tmp.obj;
 	var xTime = "<?php echo $this->time?>";
 	var xSig = "<?php echo $this->sig?>";

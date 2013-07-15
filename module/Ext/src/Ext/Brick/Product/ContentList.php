@@ -39,6 +39,9 @@ class ContentList extends AbstractExt
 				->setPage($page)
 				->setPageSize($pageSize);
 			switch($this->getParam('defaultSort')) {
+				case 'pd':
+					$co->sort('publishDate', -1);
+					break;
 				case 'sw':
 					$co->sort('weight', 1);
 					break;
