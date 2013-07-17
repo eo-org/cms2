@@ -11,7 +11,7 @@
 		<a href='/article-{{row.id}}.shtml' title='{{row.label}}'>
 			{{row.label}}
 		</a>
-		<div class='date'>{{row.created|date('Y-m-d')}}</div>
+		<div class='date'>{{row.publishDate|date('Y-m-d')}}</div>
 	</li>
 {% endfor %}
 </ul>

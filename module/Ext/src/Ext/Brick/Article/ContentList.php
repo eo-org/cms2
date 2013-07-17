@@ -32,16 +32,22 @@ class ContentList extends AbstractExt
 		} else {
 			$groupId = $groupItemDoc->getId();
 			$factory = $this->dbFactory();
-			
 			$co = $factory->_m('Article');
-			$co->setFields(array('id', 'label', 'introtext', 'introicon', 'created'))
+			$co->setFields(array('id', 'label', 'introtext', 'introicon', 'attachment', 'publishDate'))
 				->addFilter('groupId', $groupId)
 				->addFilter('status', 'publish')
 				->setPage($page)
 				->setPageSize($pageSize)
-				->sort('_id', -1);
+				->sort('publishDate', -1);
 	        $dataSize = $co->count();
 	        $data = $co->fetchDoc();
+	        foreach($data as $dataRow) {
+	        	if(is_object($dataRow->publishDate)) {
+	        		$dataRow->publishDate = date('Y-m-d', $dataRow->publishDate->sec);;
+	        	} else {
+	        		$dataRow->publishDate = $dataRow->created;
+	        	}
+	        }
 	        
 	        $paginator = new Paginator(new NullAdapter($dataSize));
 	        Paginator::setDefaultScrollingStyle('Sliding');
