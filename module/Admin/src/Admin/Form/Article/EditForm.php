@@ -63,7 +63,14 @@ class EditForm extends Form
         ));
         $this->add(array(
         	'name' => 'introicon',
-        	'attributes' => array('type' => 'hidden', 'id' => 'introicon')
+        	'attributes' => array(
+        		'type' => 'text',
+        		'id' => 'introicon',
+        		'readonly' => 'readonly',
+        		'class' => 'icon-selector',
+        		'data-callback' => 'selectIcon'
+        	),
+        	'options' => array('label' => '设置文章预览图')
         ));
     }
     
