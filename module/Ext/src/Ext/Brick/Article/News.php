@@ -27,11 +27,17 @@ class News extends AbstractExt
 		if($groupId != 'all') {
 			$co->addFilter('groupId', $groupId);
 		}
-    	$rowset = $co->fetchDoc();
-    	
+    	$data = $co->fetchDoc();
+    	foreach($data as $dataRow) {
+    		if(is_object($dataRow->publishDate)) {
+    			$dataRow->publishDate = date('Y-m-d', $dataRow->publishDate->sec);;
+    		} else {
+    			$dataRow->publishDate = $dataRow->created;
+    		}
+    	}
     	$this->view->groupId = $groupId;
 		$this->view->groupRow = $groupDoc;
-		$this->view->articalRowset = $rowset;
+		$this->view->articalRowset = $data;
 		$this->view->title = $title;
     }
     

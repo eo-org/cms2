@@ -17,7 +17,7 @@
     	<a href='/article-{{ artical.id }}.shtml' title='{{ artical.label }}' target='_blank'>
     		{{ artical.label|substr(0,20) }}
     	</a>
-    	<div class='date'>{{ artical.created|date("Y-m") }}</div>
+    	<div class='date'>{{ artical.publishDate|date("Y-m") }}</div>
     			
     	<div class='content'>{{ artical.introtext }}</div>
     </li>
