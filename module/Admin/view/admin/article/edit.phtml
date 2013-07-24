@@ -23,8 +23,10 @@
 		$( ".date-picker" ).datepicker({dateFormat: 'yy-mm-dd'});
 
 		var iconFilePath = $('#introicon').val();
-		var imgTag = $("<img class='icon-display' src='" + IconSelector.getFileServerUrl() + "/" + window.SITE_FOLDER + '/' + iconFilePath + "' />");
-		imgTag.insertAfter('#introicon');
+		if(iconFilePath != "") {
+			var imgTag = $("<img class='icon-display' src='" + IconSelector.getFileServerUrl() + "/" + window.SITE_FOLDER + '/' + iconFilePath + "' />");
+			imgTag.insertAfter('#introicon');
+		}
 	});
 
 	var selectIcon = function(data, caller) {
