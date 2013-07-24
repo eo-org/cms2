@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/attachment-editor.css'); ?>
 
 <?php ob_start(); ?>
@@ -58,4 +59,68 @@
 	<input type='hidden' name='attaUrl[]' value='<%= urlname %>' />
 	<input type='hidden' name='attaName[]' value='<%= filename %>' />
 	<input type='hidden' name='attaType[]' value='download' />
+=======
+<?php $this->headLink()->appendStylesheet($this->siteConfig('libUrl').'/admin/style/attachment-editor.css'); ?>
+
+<?php ob_start(); ?>
+<div id='attachment'>
+<h3>管理文章配图</h3>
+<div class='graphic-field'>
+	<button data-callback='appendAttachmentListener' class="icon-selector" type="button" name="graphic">添加图片</button>
+	<ul id='graphic-list'></ul>
+</div>
+<hr />
+<h3>添加下载附件</h3>
+<div class='download-field'>
+	<button data-callback='appendAttachmentListener' class="icon-selector" type="button" name="download">添加附件下载</button>
+	<ul id='download-list'></ul>
+</div>
+</div>
+<?php $content = ob_get_contents(); ob_end_clean(); ?>
+
+<?php echo $this->tabForm($this->form, array(array('handleLabel' => '图片和附件', 'content' => $content)))?>
+
+<script>
+	$(document).ready(function() {
+		$( ".date-picker" ).datepicker({dateFormat: 'yy-mm-dd'});
+
+		var iconFilePath = $('#introicon').val();
+		if(iconFilePath != "") {
+			var imgTag = $("<img class='icon-display' src='" + IconSelector.getFileServerUrl() + "/" + window.SITE_FOLDER + '/' + iconFilePath + "' />");
+			imgTag.insertAfter('#introicon');
+		}
+	});
+
+	var selectIcon = function(data, caller) {
+		$('#introicon').siblings().remove();
+		
+		$(caller).val(data.urlname);
+		var imgTag = $("<img class='icon-display' src='" + IconSelector.getFileServerUrl() + "/" + data.filepath + "' />");
+
+		imgTag.insertAfter('#introicon');
+	};
+	
+	var tmp = jQuery.parseJSON('{"obj" : <?php echo \Zend\Json\Json::encode($this->article->getAttachment())?>}');
+	var attachmentBackboneSourceObj = tmp.obj;
+//	var xTime = "<?php echo $this->time?>";
+//	var xSig = "<?php echo $this->sig?>";
+//	var thumbWidth = "<?php echo $this->thumbWidth?>";
+//	var thumbHeight = "<?php echo $this->thumbHeight?>";
+</script>
+<script data-main="<?=$this->siteConfig('libUrl')?>/admin/script/app/attachment" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
+<script type='text/template' id='graphic-template'>
+	<div class='image'><img src='http://storage.aliyun.com/public-misc/<%= window.SITE_FOLDER %>/_thumb/<%= urlname %>'></div>
+	<div class='label'><%= filename %></div>
+	<div class='mini-icon-bg mini-icon-delete remove'></div>
+	<input type='hidden' name='attaUrl[]' value='<%= urlname %>' />
+	<input type='hidden' name='attaName[]' value='<%= filename %>' />
+	<input type='hidden' name='attaType[]' value='graphic' />
+</script>
+<script type='text/template' id='download-template'>
+	<div class='name'><%= filename %></div>
+	<div class='mini-icon-bg mini-icon-delete remove'></div>
+	<input type='hidden' name='attaUrl[]' value='<%= urlname %>' />
+	<input type='hidden' name='attaName[]' value='<%= filename %>' />
+	<input type='hidden' name='attaType[]' value='download' />
+>>>>>>> 2f36e0570493c22d0f66a34db2a12b068837f27e
 </script>
