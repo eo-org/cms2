@@ -50,7 +50,7 @@ class Result extends AbstractExt
     				
     				$groupCo = $factory->_m('Group');
 					$groupDoc = $groupCo->findProductGroup();
-					$leafIds = $groupDoc->getLeaf($groupItemId);
+					$leafIds = $groupDoc->getLeafIds($groupItemId);
 					
     				$co->addFilter('$in', array(
     					array($params['filter'] => $leafIds)
