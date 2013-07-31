@@ -52,12 +52,7 @@ class Result extends AbstractExt
 					$groupDoc = $groupCo->findProductGroup();
 					$leafIds = $groupDoc->getLeafIds($groupItemId);
 					
-    				$co->addFilter('$in', array(
-    					array($params['filter'] => $leafIds)
-    				));
-    				echo "======test printing========<br />";
-    				print_r($leafIds);
-    				echo "======test printing========<br />";
+    				$co->addFilter($params['filter'], array('$in' => $leafIds));
     			}
     			
     			$co->setPage($page)
