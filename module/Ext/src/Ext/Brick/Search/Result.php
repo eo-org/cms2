@@ -44,7 +44,14 @@ class Result extends AbstractExt
     					array('name' =>	new MongoRegex("/^".$keywords."/i")),
     				));
     			}
-    				$co->setPage($page)
+    			
+    			if(isset($params['filter']) &&
+    				in_array($params['filter'], array('groupId'))
+    			) {
+    				$co->addFilter($params['filter'], $params['filterValue']);
+    			}
+    			
+    			$co->setPage($page)
     				->setPageSize($pageSize);
     		} else {
     			$co = $factory->_m('Article');

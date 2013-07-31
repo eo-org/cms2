@@ -1,4 +1,4 @@
-<div class='sprite-surrogate grid-tab' stage-id='{{stageId}}' sprite-name='surrogate-{{brickId}}'>
+<div class='sprite-surrogate grid-tab' stage-id='{{stageId}}' sprite-name='surrogate-{{brickId}}' data-response='click'>
 	<div class='tab-handles'>
 		{% for tab in tabs %}
 		<div class='tab-handle handle-{{loop.index}}'>

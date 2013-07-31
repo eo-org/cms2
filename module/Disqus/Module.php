@@ -5,7 +5,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\EventManager\StaticEventManager;
 use Zend\Serializer\Adapter\Json;
 
-use Fucms\Brick\Register, Fucms\Brick\Service\RegisterConfigAdmin;
+//use Fucms\Brick\Register, Fucms\Brick\Service\RegisterConfigAdmin;
 
 class Module
 {
@@ -60,21 +60,21 @@ class Module
 		$sm->setService('translator', $translator);
 	}
 	
-	public function setFrontLayout(MvcEvent $e)
-	{
-		$rm = $e->getRouteMatch();
+// 	public function setFrontLayout(MvcEvent $e)
+// 	{
+// 		$rm = $e->getRouteMatch();
 		
-		echo $rm->getMatchedRouteName();
+// 		echo $rm->getMatchedRouteName();
 		
-		if($e->getRequest()->isXmlHttpRequest()) {
-			$jsonArr = $e->getResult();
-			$response = $e->getResponse();
-			$response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
-			$adapter = new Json();
-			$response->setContent($adapter->serialize($jsonArr));
-			return $response;
-		} else {
-			die('not-available with http request');
-		}
-	}
+// 		if($e->getRequest()->isXmlHttpRequest()) {
+// 			$jsonArr = $e->getResult();
+// 			$response = $e->getResponse();
+// 			$response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
+// 			$adapter = new Json();
+// 			$response->setContent($adapter->serialize($jsonArr));
+// 			return $response;
+// 		} else {
+// 			die('not-available with http request');
+// 		}
+// 	}
 }
