@@ -57,7 +57,7 @@ class Result extends AbstractExt
     				));
     				echo "======test printing========<br />";
     				print_r($leafIds);
-    				echo "======test printing========<br />"
+    				echo "======test printing========<br />";
     			}
     			
     			$co->setPage($page)
