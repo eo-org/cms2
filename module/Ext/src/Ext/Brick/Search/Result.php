@@ -45,10 +45,19 @@ class Result extends AbstractExt
     				));
     			}
     			
-    			if(isset($params['filter']) &&
-    				in_array($params['filter'], array('groupId'))
-    			) {
-    				$co->addFilter($params['filter'], $params['filterValue']);
+    			if(isset($params['filter']) && $params['filter'] == 'groupId') {
+    				$groupItemId = $params['filterValue'];
+    				
+    				$groupCo = $factory->_m('Group');
+					$groupDoc = $groupCo->findProductGroup();
+					$leafIds = $groupDoc->getLeaf($groupItemId);
+					
+    				$co->addFilter('$in', array(
+    					array($params['filter'] => $leafIds)
+    				));
+    				echo "======test printing========<br />";
+    				print_r($leafIds);
+    				echo "======test printing========<br />"
     			}
     			
     			$co->setPage($page)
