@@ -6,7 +6,7 @@
 {% endif %}
 <ul>
 {% for node in bookIndex %}
-	{{ item.loop(node, bookAlias) }}
+	{{ item.loop(node, bookAlias, trailIds) }}
 {% endfor %}
 </ul>
 <div class='clear'></div>

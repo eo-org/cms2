@@ -9,7 +9,7 @@ return array(
 		'Rest',
     	'User',
     	'Disqus',
-//     	'Location',
+    	'Location',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

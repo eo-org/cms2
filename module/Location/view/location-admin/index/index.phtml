@@ -1,5 +1,5 @@
-<form name='location'>
-	<select id='provinceSelector' name='provice'>
+<form id='location-form' name='location'>
+	<select id='provinceSelector' name='provinceId'>
 		<option value='0'>请选择</option>
 		<option value="110000">北京市</option>
 		<option value="120000">天津市</option>
@@ -36,30 +36,47 @@
 		<option value="810000">香港特别行政区</option>
 		<option value="820000">澳门特别行政区</option>
 	</select>
-	<select id='citySelector' name='city'>
+	<select id='citySelector' name='cityId'>
 		<option value='0'>请选择</option>
 	</select>
-	<select id='countySelector' name='county'>
+	<select id='countySelector' name='countyId'>
 		<option value='0'>请选择</option>
 	</select>
 	<br />
 	<input type='text' name='addressDetail' value='' />
 	<br />
-	<input type='text' name='latlon' value=''>
+	<input type='text' name='latlon' value='' />
+	<br />
+	<input id='location-submit' type='button' name='submit-form' value='确定' />
 </form>
 
-<ul class='location-list'>
+<ul class='json-location-container'>
 
 </ul>
+
+<script>
+	$('#location-submit').click(function() {
+		var postData = $('#location-form').serialize();
+		
+		$.ajax({
+			type: "POST",
+			data: postData,
+			dataType: "json",
+			url: "/adminrest/locationrest-location.json",
+			success: function(jsonObj){
+				console.log(jsonObj);
+			}
+		});
+	});
+</script>
 
 <script data-main="<?=$this->siteConfig('libUrl')?>/location-admin/script/app/location" src="<?=$this->siteConfig('extUrl')?>/require-jquery.js"></script>
 
 <script type="text/template" id="location-row">
 	<div>
-		<div></div>
 		<div>
-			<div>{{fullAddress}}</div>
-			<div>{{latlon}}</div>
+			<div><%=fullAddress%></div>
+			<div><%=latlon%></div>
 		</div>
 		<div class='remove'>XX</div>
 	</div>

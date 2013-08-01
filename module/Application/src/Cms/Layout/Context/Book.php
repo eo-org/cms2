@@ -33,6 +33,7 @@ class Book extends ContextAbstract
 		if($bookDoc == null) {
 			$this->bookId = 0;
 			$layoutAlias = null;
+			$this->trail = array();
 		} else {
 			$this->bookId = $bookDoc->getId();
 			$this->bookLabel = $bookDoc->getLabel();
@@ -50,9 +51,9 @@ class Book extends ContextAbstract
 			$this->bookPageDoc = $qb->getQuery()
 				->getSingleResult();
 			$pageId = $this->bookPageDoc->getId();
+			$this->trail = $bookDoc->getTrail($pageId);
 		}
 		$this->bookDoc = $bookDoc;
-		$this->trail = $bookDoc->getTrail($pageId);
 		
 		$layoutDoc = null;
 		if(is_null($presetLayoutDoc)) {

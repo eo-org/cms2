@@ -22,6 +22,7 @@ class Module
         return array(
             'Zend\Loader\StandardAutoloader' => array(
 				'namespaces' => array(
+					'Location'		=> __DIR__ . '/src/Location',
 					'LocationAdmin'	=> __DIR__ . '/src/LocationAdmin',
 					'LocationRest'	=> __DIR__ . '/src/LocationRest'
 				)
