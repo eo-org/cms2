@@ -44,8 +44,12 @@ class LocationController extends AbstractRestfulController
 	public function create($data)
 	{
 		$countyId = $data['countyId'];
-		$fullAddressPrefix = $this->getFullAddressPrefix($countyId);
-		$data['fullAddress'] = $fullAddressPrefix.$data['addressDetail'];
+		$prefixArr = $this->getFullAddressPrefix($countyId);
+		
+		$data['provinceName'] = $prefixArr['provinceName'];
+		$data['cityName'] = $prefixArr['cityName'];
+		$data['countyName'] = $prefixArr['countyName'];
+		$data['fullAddress'] = $prefixArr['pccName'].$data['addressDetail'];
 		
  		$locationDoc = new Location();
  		$locationDoc->exchangeArray($data);
@@ -76,6 +80,11 @@ class LocationController extends AbstractRestfulController
 		curl_close($ch);
 		
 		$jsonObj = json_decode($output);
-		return $jsonObj->Data->pccName;
+		return array(
+			'provinceName' => $jsonObj->Data->provinceName,
+			'cityName' => $jsonObj->Data->cityName,
+			'countyName' => $jsonObj->Data->countyName,
+			'pccName' => $jsonObj->Data->pccName
+		);
 	}
 }
