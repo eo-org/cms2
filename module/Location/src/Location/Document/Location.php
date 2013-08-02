@@ -16,6 +16,9 @@ class Location extends AbstractDocument
 	protected $id;
 
 	/** @ODM\Field(type="string")  */
+	protected $label;
+	
+	/** @ODM\Field(type="string")  */
 	protected $provinceName;
 	
 	/** @ODM\Field(type="string")  */
@@ -44,6 +47,7 @@ class Location extends AbstractDocument
 	
 	public function exchangeArray($data)
 	{
+		$this->label = $data['label'];
 		$this->provinceName = $data['provinceName'];
 		$this->cityName = $data['cityName'];
 		$this->countyName = $data['countyName'];
@@ -59,6 +63,10 @@ class Location extends AbstractDocument
 	{
 		return array(
 			'id' => $this->id,
+			'label' => $this->label,
+			'provinceName' => $this->provinceName,
+			'cityName' => $this->cityName,
+			'countyName' => $this->countyName,
 			'provinceId' => $this->provinceId,
 			'cityId' => $this->cityId,
 			'countyId' => $this->countyId,
