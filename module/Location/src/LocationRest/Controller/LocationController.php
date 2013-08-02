@@ -73,8 +73,11 @@ class LocationController extends AbstractRestfulController
 	
 	public function getFullAddressPrefix($countyId)
 	{
+		$config = $this->getServiceLocator()->get('Config');
+		$apiHost = $config['api']['host'];
+		
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'api.eo.test/rest/address/'.$countyId);
+		curl_setopt($ch, CURLOPT_URL, $apiHost.'/rest/address/'.$countyId);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$output = curl_exec($ch);
 		curl_close($ch);

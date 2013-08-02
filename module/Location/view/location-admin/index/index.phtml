@@ -43,11 +43,13 @@
 		<option value='0'>请选择</option>
 	</select>
 	<br />
-	<input type='text' name='label' value='' />
+	Label: <input type='text' name='label' value='' />
 	<br />
-	<input type='text' name='addressDetail' value='' />
+	Tel: <input type='text' name='tel' value='' />
 	<br />
-	<input type='text' name='latlon' value='' />
+	Detail: <input type='text' name='addressDetail' value='' />
+	<br />
+	Latlon: <input type='text' name='latlon' value='' />
 	<br />
 	<input id='location-submit' type='button' name='submit-form' value='确定' />
 </form>
@@ -85,7 +87,7 @@
 </script>
 
 <script type='text/javascript'>
-var addressApi = "http://api.eo.test/rest/address/";
+var addressApi = "http://<?php echo $this->api['host']?>/rest/address/";
 var provinceSelector = $('#provinceSelector');
 var citySelector = $('#citySelector');
 var countySelector = $('#countySelector');

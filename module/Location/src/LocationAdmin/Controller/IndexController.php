@@ -9,6 +9,9 @@ class IndexController extends AbstractActionController
 	{
 		$this->brickConfig()->setActionMenu(array())
 			->setActionTitle('Location Management');
+		$config = $this->getServiceLocator()->get('Config');
+		$api = $config['api'];
+		return array('api' => $api);
 	}
 	
 	public function createAction()
