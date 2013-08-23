@@ -7,8 +7,8 @@ class IndexController extends AbstractActionController
 {
 	public function indexAction()
 	{
-		$this->brickConfig()->setActionMenu(array())
-			->setActionTitle('留言管理');
+		$this->actionMenu = array();
+		$this->actionTitle = '留言管理';
 	}
 	
 	public function createAction()

@@ -30,7 +30,7 @@ class News extends AbstractExt
     	$data = $co->fetchDoc();
     	foreach($data as $dataRow) {
     		if(is_object($dataRow->publishDate)) {
-    			$dataRow->publishDate = date('Y-m-d', $dataRow->publishDate->sec);;
+    			$dataRow->publishDate = date('Y-m-d', $dataRow->publishDate->sec);
     		} else {
     			$dataRow->publishDate = $dataRow->created;
     		}

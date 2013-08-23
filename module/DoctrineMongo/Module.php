@@ -45,14 +45,14 @@ class Module implements BootstrapListenerInterface
 		$sm->setService('DocumentManager', $dm);
 	}
 	
-	public function getAutoloaderConfig()
-	{
-		return array(
-			'Zend\Loader\StandardAutoloader' => array(
-				'namespaces' => array(
-					__NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-				),
-			),
-		);
-	}
+// 	public function getAutoloaderConfig()
+// 	{
+// 		return array(
+// 			'Zend\Loader\StandardAutoloader' => array(
+// 				'namespaces' => array(
+// 					__NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+// 				),
+// 			),
+// 		);
+// 	}
 }

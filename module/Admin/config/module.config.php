@@ -126,21 +126,17 @@ return array(
 			'title' => '模块管理',
 			'url' => '/admin/brick/',
 		),
-		'useradmin-user' => array(
-			'title' => '用户管理',
-			'url' => '/admin/useradmin-user/',
-		),
-		'disqusadmin-thread' => array(
-			'title' => 'DISQUS',
-			'url' => '/admin/disqusadmin-thread',
-		),
 		'file' => array(
 			'title' => '文件管理',
 			'url' => 'http://file.enorange.com/<%=remoteSiteId%>/admin/',
 		),
-		'message' => array(
-			'title' => '留言管理',
-			'url' => 'http://form.enorange.cn/<%=remoteSiteId%>/admin/',
-		)
+		'useradmin-user' => array(
+			'title' => 'USER',
+			'url' => '/admin/useradmin-user/',
+		),
+		'disqusadmin-thread' => array(
+			'title' => 'DISQUS',
+			'url' => '/admin/disqusadmin-thread/',
+		),
 	)
 );
