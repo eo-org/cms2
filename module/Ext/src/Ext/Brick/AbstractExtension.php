@@ -1,10 +1,17 @@
 <?php
+/**
+ * 
+ * @author Gavin
+ *
+ * The Version 2 of AbstractExt.php,
+ * use dm instead of dbFactory
+ */
 namespace Ext\Brick;
 
 use Exception;
 use Twig\View;
 
-abstract class AbstractExt
+abstract class AbstractExtension
 {
 	protected $_brick = null;
 	
@@ -57,11 +64,6 @@ abstract class AbstractExt
     	return $this->sm->get('DocumentManager');
     }
     
-    public function dbFactory()
-    {
-    	return $this->sm->get('Core\Mongo\Factory');
-    }
-    
     public function getController()
     {
     	return $this->controller;
@@ -72,7 +74,7 @@ abstract class AbstractExt
     	$formClassName = $this->getFormClass();
     	
     	if(!is_null($formClassName)) {
-	    	$paramForm = new $formClassName($this->dbFactory());
+	    	$paramForm = new $formClassName($this->documentManager());
 	    	$form->add($paramForm);
     	}
     	return $form;
@@ -108,12 +110,11 @@ abstract class AbstractExt
     	return $this->_effectFiles;
     }
     
-	public function getParam($key, $defaultValue = NULL)
+	public function param($key, $defaultValue = NULL)
     {
     	$params = $this->_params;
     	if(isset($params->$key)) {
-    		$temp = $params->$key;
-    		return $temp;
+    		return $params->$key;
     	}
     	return $defaultValue;
     }
@@ -137,27 +138,6 @@ abstract class AbstractExt
 	    	}
     	}
     }
-    
-//     public function setScriptFile($filename)
-//     {
-//     	$this->_scriptName = $filename;
-//     }
-    
-//     public function path()
-//     {
-//     	$extName = strtolower($this->_brick->extName);
-//         $path = str_replace('_', '/', $extName);
-//         return '/'.$path;
-//     }
-    
-//     public function twigPath()
-//     {
-//     	$sm = $this->sm;
-//     	$siteConfig = $sm->get('ConfigObject\EnvironmentConfig');
-//     	$globalSiteId = $siteConfig->globalSiteId;
-//     	$twigPath = BASE_PATH.'/tpl/'.$globalSiteId.'/'.$this->_brick->extName;
-//         return $twigPath;
-//     }
     
     public function render($type = null)
     {

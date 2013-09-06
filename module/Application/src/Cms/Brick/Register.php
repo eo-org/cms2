@@ -1,7 +1,7 @@
 <?php
 namespace Cms\Brick;
 
-use Ext\Twig\Filter as TwigFilter;
+use Twig\Filter as TwigFilter;
 
 class Register
 {

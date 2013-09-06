@@ -2,9 +2,10 @@
 return array(
     'modules' => array(
     	'DoctrineMongo',
+    	'Twig',
     	'Ext',
 		'Application',
-     	'ZfcTwig',
+     	//'ZfcTwig',
 		'Admin',
 		'Rest',
     	'User',
@@ -17,7 +18,8 @@ return array(
             'config/autoload/{,*.}{global,local}.php'
         ),
         'module_paths' => array(
-            './module'
+            './module',
+        	'./extra'
         ),
     ),
 );
