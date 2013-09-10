@@ -1,5 +1,5 @@
 <form class='messageform' method='POST'>
 <ul>
-{{ printElements(messageForm) | raw }}
+{{ printElements(messageForm) }}
 </ul>
 </form>

@@ -1,5 +1,5 @@
 <?php
-namespace Cms\Twig;
+namespace Cms\Twig\Loader;
 
 use Twig_LoaderInterface;
 use Twig_Error_Loader;
@@ -7,7 +7,6 @@ use Twig_Error_Loader;
 class DatabaseLoader implements Twig_LoaderInterface
 {
     protected $dm;
-	protected $fileLoader;
 	
     public function __construct($dm, $fileLoader)
     {

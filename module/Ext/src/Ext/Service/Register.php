@@ -1,7 +1,7 @@
 <?php
 namespace Ext\Service;
 
-use Twig\Filter as TwigFilter;
+use Cms\Twig\Filter as TwigFilter;
 
 class Register
 {

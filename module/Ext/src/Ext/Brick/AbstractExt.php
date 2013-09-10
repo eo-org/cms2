@@ -2,13 +2,12 @@
 namespace Ext\Brick;
 
 use Exception;
-use Twig\View;
 
 abstract class AbstractExt
 {
 	protected $_brick = null;
 	
-	protected $_params = null;
+	protected $params = null;
 	
 	protected $controller;
 	
@@ -16,16 +15,14 @@ abstract class AbstractExt
 	
 	protected $sm;
 	
-    protected $_disableRender = false;
+    protected $disableRender = false;
     
-    protected $_effectFiles = null;
-    
-    protected $view = null;
-    
+    protected $effectFiles = null;
+
     public function initParam($brick, $controller)
     {
     	$this->_brick = $brick;
-    	$this->_params = (object)$brick->params;
+    	$this->params = (object)$brick->params;
     	$this->controller = $controller;
     	$this->sm = $controller->getServiceLocator();
     }
@@ -105,12 +102,12 @@ abstract class AbstractExt
     
     public function getEffectFiles()
     {
-    	return $this->_effectFiles;
+    	return $this->effectFiles;
     }
     
 	public function getParam($key, $defaultValue = NULL)
     {
-    	$params = $this->_params;
+    	$params = $this->params;
     	if(isset($params->$key)) {
     		$temp = $params->$key;
     		return $temp;
@@ -120,7 +117,7 @@ abstract class AbstractExt
     
     public function setParam($key, $value)
     {
-    	$this->_params->$key = $value;
+    	$this->params->$key = $value;
     	return true;
     }
     
@@ -132,64 +129,85 @@ abstract class AbstractExt
 	    	}
 	    	foreach($src as $key => $value) {
 	    		if(!empty($value)) {
-	    			$this->_params->$key = $value;
+	    			$this->params->$key = $value;
 	    		}
 	    	}
     	}
     }
     
-//     public function setScriptFile($filename)
-//     {
-//     	$this->_scriptName = $filename;
-//     }
-    
-//     public function path()
-//     {
-//     	$extName = strtolower($this->_brick->extName);
-//         $path = str_replace('_', '/', $extName);
-//         return '/'.$path;
-//     }
-    
-//     public function twigPath()
-//     {
-//     	$sm = $this->sm;
-//     	$siteConfig = $sm->get('ConfigObject\EnvironmentConfig');
-//     	$globalSiteId = $siteConfig->globalSiteId;
-//     	$twigPath = BASE_PATH.'/tpl/'.$globalSiteId.'/'.$this->_brick->extName;
-//         return $twigPath;
-//     }
-    
     public function render($type = null)
     {
-    	if($this->_disableRender === true) {
+    	if($this->disableRender === true) {
 	        return "<div class='no-render'></div>";
-    	} else if(is_string($this->_disableRender)) {
-    		return "<div class='".$this->_disableRender."' brickId='".$this->_brick->getId()."'>无法找到对应的URL，此模块内容为空</div>";
+    	} else if(is_string($this->disableRender)) {
+    		return "<div class='".$this->disableRender."' brickId='".$this->_brick->getId()."'>无法找到对应的URL，此模块内容为空</div>";
     	} else {
     		$tplName = $this->_brick->tplName;
     		$systemTplList = $this->getTplList();
-	    	$this->view = new View();
+    		$templateName = $tplName;
+    		
+    		if(isset($systemTplList[$tplName])) {
+    			$tplName = $systemTplList[$tplName];
+    			//return $this->view->render($systemTplList[$tplName]);
+    		} //else {
+    			//return $this->view->render($tplName);
+    		//}
+    		
+    		
+    		$this->prepare();
+    		
+    		
+    		
+    		
+// 	    	$this->view = new View();
 	    	
-			$this->view->assign($this->_params);
-			$this->prepare();
+// 			$this->view->assign($this->params);
 			
-			$this->view->setBrickId($this->_brick->getId())
-				->setExtName($this->_brick->extName)
-				->setClassSuffix($this->_brick->cssSuffix);
 			
-			$this->view->brickName = $this->_brick->brickName;
-			$this->view->brickId = $this->_brick->getId();
-			$this->view->displayBrickName = $this->_brick->displayBrickName;
+// 			$this->view->setBrickId($this->_brick->getId())
+// 				->setExtName($this->_brick->extName)
+// 				->setClassSuffix($this->_brick->cssSuffix);
 			
-			try {
-				if(isset($systemTplList[$tplName])) {
-					return $this->view->render($systemTplList[$tplName]);
-				} else {
-					return $this->view->render($tplName);
+// 			$this->view->brickName = $this->_brick->brickName;
+// 			$this->view->brickId = $this->_brick->getId();
+// 			$this->view->displayBrickName = $this->_brick->displayBrickName;
+			
+			
+// 			$values = array_merge($this->params, array(
+// 				'brickName'	=> $this->_brick->brickName,
+// 				'brickId'	=> $this->_brick->getId(),
+// 			));
+			
+			
+			$twigEnv = $this->sm->get('Twig\Environment');
+			if($template = $twigEnv->loadTemplate($tplName)) {
+				return $template->render($values);
+				try {
+					return $template->render($values);
+					// 				if(isset($systemTplList[$tplName])) {
+					// 					return $this->view->render($systemTplList[$tplName]);
+					// 				} else {
+					// 					return $this->view->render($tplName);
+					// 				}
+				} catch(Exception $e) {
+					return $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
 				}
-			} catch(Exception $e) {
-				return $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
+			} else {
+				return 'tpl not found with name '.$tplName;
 			}
+			
+			
+			
+			
+// 			try {
+// 				if(isset($systemTplList[$tplName])) {
+// 					return $this->view->render($systemTplList[$tplName]);
+// 				} else {
+// 					return $this->view->render($tplName);
+// 				}
+// 			} catch(Exception $e) {
+// 				return $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
+// 			}
     	}
     }
     

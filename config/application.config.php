@@ -1,13 +1,13 @@
 <?php
 return array(
     'modules' => array(
+/*******basic modules*******/
     	'DoctrineMongo',
-    	'Twig',
     	'Ext',
 		'Application',
-     	//'ZfcTwig',
 		'Admin',
 		'Rest',
+/*******extra modules*******/
     	'User',
     	'Disqus',
     	'Location',

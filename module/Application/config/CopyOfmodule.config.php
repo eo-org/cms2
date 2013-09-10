@@ -146,9 +146,15 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-        	'layout/error'				=> __DIR__ . '/../view/error/error.phtml',
-        	'error/404'					=> __DIR__ . '/../view/error/404.phtml',
-        	'error/index'				=> __DIR__ . '/../view/error/index.phtml',
+    		'layout/error'				=> __DIR__ . '/../view/layout/error.phtml',
+            'layout/layout'				=> __DIR__ . '/../view/layout/layout.phtml',
+        	'layout/body'				=> __DIR__ . '/../view/layout/body.phtml',
+        	'layout/head-client'		=> __DIR__ . '/../view/layout/head-client.phtml',
+    		'layout/head-admin'			=> __DIR__ . '/../view/layout/head-admin.phtml',
+    		'layout/toolbar'			=> __DIR__ . '/../view/layout/toolbar.phtml',
+            'application/index/index'	=> __DIR__ . '/../view/application/index/index.phtml',
+            'error/404'					=> __DIR__ . '/../view/error/404.phtml',
+            'error/index'				=> __DIR__ . '/../view/error/index.phtml',
         ),
     	'strategies' => array(
     		'ViewJsonStrategy'
@@ -177,17 +183,6 @@ return array(
 		),
 	),
 	'twig' => array(
-		'application_layout_map' => array(
-			'layout/layout'				=> __DIR__ . '/../view/layout/layout.tpl',
-			'layout/head-client'		=> __DIR__ . '/../view/layout/head-client.tpl',
-			'layout/head-admin'			=> __DIR__ . '/../view/layout/head-admin.tpl',
-			'layout/toolbar'			=> __DIR__ . '/../view/layout/toolbar.tpl',
-			'layout/toolbar-tail'		=> __DIR__ . '/../view/layout/toolbar-tail.tpl',
-			'layout/bg-wrapper'			=> __DIR__ . '/../view/layout/bg-wrapper.tpl',
-			'layout/body-head'			=> __DIR__ . '/../view/layout/body-head.tpl',
-			'layout/body-main'			=> __DIR__ . '/../view/layout/body-main.tpl',
-			'layout/body-tail'			=> __DIR__ . '/../view/layout/body-tail.tpl',
-		),
 		'filters' => array(
 			'outputImage',
 			'graphicDataJson',
@@ -198,26 +193,6 @@ return array(
 			'query',
 		),
 		'functions' => array(
-			'pageMeta'	=> function($name, $content) {
-				return "<meta name='$name' content='$content'>";
-			},
-			'pageTitle'			=> function($title) {
-				return "<title>$title</title>";
-			},
-			'pageHeadLink'		=> function($headlinks) {
-				$linkHTML = "";
-				foreach($headlinks as $link) {
-					$linkHTML.= "<link href='$link' media='screen' rel='stylesheet' type='text/css'>";
-				}
-				return $linkHTML;
-			},
-			'pageHeadScript'	=> function($headscripts) {
-				$scriptHTML = "";
-				foreach($headscripts as $script) {
-					$scriptHTML.= "<script type='text/javascript' src='$script'></script>";
-				}
-				return $scriptHTML;
-			},
 			'getArrayValue' => function($arr, $key, $default = null) {
 				if(isset($arr[$key])) {
 					return $arr[$key];

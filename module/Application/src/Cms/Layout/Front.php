@@ -35,14 +35,9 @@ class Front
 		$sm = $this->sm;
 		$infoDoc = $this->getGeneralSiteInfo();
 		
-		$doctypeHelper = new Doctype();
-		$doctypeHelper->setDoctype('HTML5');
-		if(!is_null($infoDoc)) {
-			$renderer = $sm->get('Zend\View\Renderer\PhpRenderer');
-			$renderer->headTitle($infoDoc->pageTitle);
-			$renderer->headMeta()->setName('keywords', $infoDoc->metakey);
-			$renderer->headMeta()->setName('description', $infoDoc->metadesc);
-		}
+// 		$doctypeHelper = new Doctype();
+// 		$doctypeHelper->setDoctype('HTML5');
+		
 		
 		$layoutDoc = $this->getLayoutDoc();
 		
@@ -67,6 +62,14 @@ class Front
 			'userLayoutDocs' => $userLayoutDocs
 		));
 		
+		if(!is_null($infoDoc)) {
+			$viewModel->setVariables(array(
+				'title' => $infoDoc->pageTitle,
+				'keywords' => $infoDoc->metakey,
+				'description' => $infoDoc->metadesc
+			));
+		}
+		
 		/*
 		 * @todo move all view model to controller!
 		 * why we have it here in the first place ?
@@ -80,22 +83,34 @@ class Front
 		$headFileCo = $factory->_m('HeadFile');
 		$headFileDocs = $headFileCo->fetchDoc();
 		
+		$stylesheetArr = array();
+		$scriptArr = array();
 		$viewHelper = $sm->get('ViewHelperManager');
 		foreach($headFileDocs as $doc) {
 			if($doc->folder == 'helper') {
 				if($doc->type == 'css') {
-					$viewHelper->get('HeadLink')->appendStylesheet($siteConfig->libUrl.'/front/script/helper/'.$doc->filename);
+					//$viewHelper->get('HeadLink')->appendStylesheet();
+					$stylesheetArr[] = $siteConfig->libUrl.'/front/script/helper/'.$doc->filename;
 				} else {
-					$viewHelper->get('HeadScript')->appendFile($siteConfig->libUrl.'/front/script/helper/'.$doc->filename);
+					//$viewHelper->get('HeadScript')->appendFile();
+					$stylesheetArr[] = $siteConfig->libUrl.'/front/script/helper/'.$doc->filename;
 				}
 			} else {
 				if($doc->type == 'css') {
-					$viewHelper->get('HeadLink')->appendStylesheet($fileUrl.'/'.$doc->filename);
+					//$viewHelper->get('HeadLink')->appendStylesheet($fileUrl.'/'.$doc->filename);
+					$scriptArr = $fileUrl.'/'.$doc->filename;
 				} else {
-					$viewHelper->get('HeadScript')->appendFile($fileUrl.'/'.$doc->filename);
+					//$viewHelper->get('HeadScript')->appendFile($fileUrl.'/'.$doc->filename);
+					$scriptArr = $fileUrl.'/'.$doc->filename;
 				}
 			}
 		}
+		
+		$viewModel->setVariables(array(
+			'headlinks' => $stylesheetArr,
+			'headscripts' => $scriptArr,
+		));
+		
 		return $viewModel;
 	}
 	
