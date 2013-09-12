@@ -5,7 +5,7 @@ use Exception;
 use Zend\View\Model\ViewModel;
 use Cms\Session\Admin;
 
-abstract class AbstractExt
+abstract class AbstractExtension
 {
 	protected $_brick = null;
 	
