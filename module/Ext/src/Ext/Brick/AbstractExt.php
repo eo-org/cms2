@@ -107,7 +107,7 @@ abstract class AbstractExt
     
     public function getClassSuffix()
     {
-    	return $this->_brick->classSuffix;
+    	return $this->_brick->cssSuffix;
     }
     
     public function getEffectFiles()
