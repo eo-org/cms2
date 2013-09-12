@@ -21,8 +21,8 @@ class Module
 		
 		$sessionAdmin = new SessionAdmin();
 		if(!$sessionAdmin->isLogin()) {
-			$listener = new \Cms\Cache\Listener\CacheListener();
-			$sharedEvents->attach('Zend\Mvc\Application', $listener, null);
+			//$listener = new \Cms\Cache\Listener\CacheListener();
+			//$sharedEvents->attach('Zend\Mvc\Application', $listener, null);
 		}
 	}
 	
