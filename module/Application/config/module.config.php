@@ -198,6 +198,12 @@ return array(
 			'query',
 		),
 		'functions' => array(
+			'headMeta' => function() {
+				return "";
+			},
+			'headTitle' => function() {
+				return "";
+			},
 			'pageMeta'	=> function($name, $content) {
 				return "<meta name='$name' content='$content'>";
 			},
