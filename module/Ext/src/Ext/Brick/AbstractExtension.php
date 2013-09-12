@@ -1,21 +1,15 @@
 <?php
-/**
- * 
- * @author Gavin
- *
- * The Version 2 of AbstractExt.php,
- * use dm instead of dbFactory
- */
 namespace Ext\Brick;
 
 use Exception;
-use Twig\View;
+use Zend\View\Model\ViewModel;
+use Cms\Session\Admin;
 
-abstract class AbstractExtension
+abstract class AbstractExt
 {
 	protected $_brick = null;
 	
-	protected $_params = null;
+	protected $params = null;
 	
 	protected $controller;
 	
@@ -23,18 +17,19 @@ abstract class AbstractExtension
 	
 	protected $sm;
 	
-    protected $_disableRender = false;
+    protected $disableRender = false;
     
-    protected $_effectFiles = null;
-    
-    protected $view = null;
+    protected $effectFiles = null;
+
+    protected $view;
     
     public function initParam($brick, $controller)
     {
     	$this->_brick = $brick;
-    	$this->_params = (object)$brick->params;
+    	$this->params = $brick->params;
     	$this->controller = $controller;
     	$this->sm = $controller->getServiceLocator();
+    	$this->view = new ViewModel();
     }
     
     public function setLayoutFront($lf)
@@ -59,7 +54,7 @@ abstract class AbstractExtension
     	return null;
     }
     
-    public function documentManager()
+	public function documentManager()
     {
     	return $this->sm->get('DocumentManager');
     }
@@ -80,14 +75,14 @@ abstract class AbstractExtension
     	return $form;
     }
     
+    public function getBrickId()
+    {
+    	return $this->_brick->getId();
+    }
+    
     public function getExtName()
     {
     	return $this->_brick->extName;
-    }
-    
-	public function getBrickId()
-    {
-    	return $this->_brick->brickId;
     }
     
     public function getBrickName()
@@ -105,23 +100,33 @@ abstract class AbstractExtension
     	return $this->_brick->spriteName;
     }
     
-    public function getEffectFiles()
+    public function getClassSuffix()
     {
-    	return $this->_effectFiles;
+    	if(empty($this->_brick->cssSuffix)) {
+    		return "";
+    	} else {
+    		return " ".$this->_brick->cssSuffix;
+    	}
     }
     
-	public function param($key, $defaultValue = NULL)
+    public function getEffectFiles()
     {
-    	$params = $this->_params;
-    	if(isset($params->$key)) {
-    		return $params->$key;
+    	return $this->effectFiles;
+    }
+    
+	public function getParam($key, $defaultValue = NULL)
+    {
+    	$params = $this->params;
+    	if(isset($params[$key])) {
+    		$temp = $params[$key];
+    		return $temp;
     	}
     	return $defaultValue;
     }
     
     public function setParam($key, $value)
     {
-    	$this->_params->$key = $value;
+    	$this->params[$key] = $value;
     	return true;
     }
     
@@ -133,7 +138,7 @@ abstract class AbstractExtension
 	    	}
 	    	foreach($src as $key => $value) {
 	    		if(!empty($value)) {
-	    			$this->_params->$key = $value;
+	    			$this->params[$key] = $value;
 	    		}
 	    	}
     	}
@@ -141,34 +146,57 @@ abstract class AbstractExtension
     
     public function render($type = null)
     {
-    	if($this->_disableRender === true) {
+    	if($this->disableRender === true) {
 	        return "<div class='no-render'></div>";
-    	} else if(is_string($this->_disableRender)) {
-    		return "<div class='".$this->_disableRender."' brickId='".$this->_brick->getId()."'>无法找到对应的URL，此模块内容为空</div>";
+    	} else if(is_string($this->disableRender)) {
+    		return "<div class='".$this->disableRender."' brickId='".$this->_brick->getId()."'>无法找到对应的URL，此模块内容为空</div>";
     	} else {
     		$tplName = $this->_brick->tplName;
     		$systemTplList = $this->getTplList();
-	    	$this->view = new View();
-	    	
-			$this->view->assign($this->_params);
-			$this->prepare();
+    		$templateName = $tplName;
+    		
+    		if(isset($systemTplList[$tplName])) {
+    			$tplName = $systemTplList[$tplName];
+    		}
+    		
+    		$this->prepare();
+    		
+			$variables = $this->view->getVariables()->getArrayCopy();
 			
-			$this->view->setBrickId($this->_brick->getId())
-				->setExtName($this->_brick->extName)
-				->setClassSuffix($this->_brick->cssSuffix);
+			if(is_null($this->params)) {
+				$this->params = array();
+			}
+			if(is_null($variables)) {
+				$variables = array();
+			}
+			$values = array_merge($this->params, $variables, array(
+				'brickName'	=> $this->_brick->brickName,
+				'brickId'	=> $this->_brick->getId(),
+			));
 			
-			$this->view->brickName = $this->_brick->brickName;
-			$this->view->brickId = $this->_brick->getId();
-			$this->view->displayBrickName = $this->_brick->displayBrickName;
+			if(is_null($values)) {
+				$values = array();
+			}
 			
-			try {
-				if(isset($systemTplList[$tplName])) {
-					return $this->view->render($systemTplList[$tplName]);
-				} else {
-					return $this->view->render($tplName);
+			$twigEnv = $this->sm->get('Twig\Environment');
+			if($template = $twigEnv->loadTemplate($tplName)) {
+				$sessionAdmin = new Admin();
+				$templateHTML = "";
+				try {
+					$templateHTML =  $template->render($values);
+				} catch(Exception $e) {
+					$templateHTML =  $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
 				}
-			} catch(Exception $e) {
-				return $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
+				$className = strtolower(substr($this->getExtName(), 4)).$this->getClassSuffix();
+				if($sessionAdmin->isLogin()) {
+					$tHead = '<div class="'.$className.'" brick-id="'.$this->getBrickId().'" ext-name="'.$this->getExtName().'" >';
+				} else {
+					$tHead = '<div class="'.$className.'">';
+				}
+				$tTail = "</div>";
+				return $tHead.$templateHTML.$tTail;
+			} else {
+				return 'tpl not found with name '.$tplName;
 			}
     	}
     }
