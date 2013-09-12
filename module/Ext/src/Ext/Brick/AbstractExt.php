@@ -175,6 +175,7 @@ abstract class AbstractExt
 				$variables = array();
 			}
 			$values = array_merge($this->params, $variables, array(
+				'displayBrickName' => $this->_brick->displayBrickName,
 				'brickName'	=> $this->_brick->brickName,
 				'brickId'	=> $this->_brick->getId(),
 			));
