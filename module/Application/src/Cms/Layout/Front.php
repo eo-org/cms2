@@ -93,15 +93,15 @@ class Front
 					$stylesheetArr[] = $siteConfig->libUrl.'/front/script/helper/'.$doc->filename;
 				} else {
 					//$viewHelper->get('HeadScript')->appendFile();
-					$stylesheetArr[] = $siteConfig->libUrl.'/front/script/helper/'.$doc->filename;
+					$scriptArr[] = $siteConfig->libUrl.'/front/script/helper/'.$doc->filename;
 				}
 			} else {
 				if($doc->type == 'css') {
 					//$viewHelper->get('HeadLink')->appendStylesheet($fileUrl.'/'.$doc->filename);
-					$scriptArr = $fileUrl.'/'.$doc->filename;
+					$stylesheetArr[] = $fileUrl.'/'.$doc->filename;
 				} else {
 					//$viewHelper->get('HeadScript')->appendFile($fileUrl.'/'.$doc->filename);
-					$scriptArr = $fileUrl.'/'.$doc->filename;
+					$scriptArr[] = $fileUrl.'/'.$doc->filename;
 				}
 			}
 		}
