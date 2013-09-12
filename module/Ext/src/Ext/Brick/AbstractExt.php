@@ -2,6 +2,8 @@
 namespace Ext\Brick;
 
 use Exception;
+use Zend\View\Model\ViewModel;
+use Cms\Session\Admin;
 
 abstract class AbstractExt
 {
@@ -19,12 +21,15 @@ abstract class AbstractExt
     
     protected $effectFiles = null;
 
+    protected $view;
+    
     public function initParam($brick, $controller)
     {
     	$this->_brick = $brick;
-    	$this->params = (object)$brick->params;
+    	$this->params = $brick->params;
     	$this->controller = $controller;
     	$this->sm = $controller->getServiceLocator();
+    	$this->view = new ViewModel();
     }
     
     public function setLayoutFront($lf)
@@ -75,14 +80,14 @@ abstract class AbstractExt
     	return $form;
     }
     
+    public function getBrickId()
+    {
+    	return $this->_brick->getId();
+    }
+    
     public function getExtName()
     {
     	return $this->_brick->extName;
-    }
-    
-	public function getBrickId()
-    {
-    	return $this->_brick->brickId;
     }
     
     public function getBrickName()
@@ -100,6 +105,11 @@ abstract class AbstractExt
     	return $this->_brick->spriteName;
     }
     
+    public function getClassSuffix()
+    {
+    	return $this->_brick->classSuffix;
+    }
+    
     public function getEffectFiles()
     {
     	return $this->effectFiles;
@@ -108,8 +118,8 @@ abstract class AbstractExt
 	public function getParam($key, $defaultValue = NULL)
     {
     	$params = $this->params;
-    	if(isset($params->$key)) {
-    		$temp = $params->$key;
+    	if(isset($params[$key])) {
+    		$temp = $params[$key];
     		return $temp;
     	}
     	return $defaultValue;
@@ -117,7 +127,7 @@ abstract class AbstractExt
     
     public function setParam($key, $value)
     {
-    	$this->params->$key = $value;
+    	$this->params[$key] = $value;
     	return true;
     }
     
@@ -129,7 +139,7 @@ abstract class AbstractExt
 	    	}
 	    	foreach($src as $key => $value) {
 	    		if(!empty($value)) {
-	    			$this->params->$key = $value;
+	    			$this->params[$key] = $value;
 	    		}
 	    	}
     	}
@@ -148,66 +158,37 @@ abstract class AbstractExt
     		
     		if(isset($systemTplList[$tplName])) {
     			$tplName = $systemTplList[$tplName];
-    			//return $this->view->render($systemTplList[$tplName]);
-    		} //else {
-    			//return $this->view->render($tplName);
-    		//}
-    		
+    		}
     		
     		$this->prepare();
     		
-    		
-    		
-    		
-// 	    	$this->view = new View();
-	    	
-// 			$this->view->assign($this->params);
+			$variables = $this->view->getVariables()->getArrayCopy();
 			
-			
-// 			$this->view->setBrickId($this->_brick->getId())
-// 				->setExtName($this->_brick->extName)
-// 				->setClassSuffix($this->_brick->cssSuffix);
-			
-// 			$this->view->brickName = $this->_brick->brickName;
-// 			$this->view->brickId = $this->_brick->getId();
-// 			$this->view->displayBrickName = $this->_brick->displayBrickName;
-			
-			
-// 			$values = array_merge($this->params, array(
-// 				'brickName'	=> $this->_brick->brickName,
-// 				'brickId'	=> $this->_brick->getId(),
-// 			));
-			
+			$values = array_merge($this->params, $variables, array(
+				'brickName'	=> $this->_brick->brickName,
+				'brickId'	=> $this->_brick->getId(),
+			));
 			
 			$twigEnv = $this->sm->get('Twig\Environment');
 			if($template = $twigEnv->loadTemplate($tplName)) {
-				return $template->render($values);
+				$sessionAdmin = new Admin();
+				$templateHTML = "";
 				try {
-					return $template->render($values);
-					// 				if(isset($systemTplList[$tplName])) {
-					// 					return $this->view->render($systemTplList[$tplName]);
-					// 				} else {
-					// 					return $this->view->render($tplName);
-					// 				}
+					$templateHTML =  $template->render($values);
 				} catch(Exception $e) {
-					return $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
+					$templateHTML =  $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
 				}
+				$className = strtolower(substr($this->getExtName(), 4)).$this->getClassSuffix();
+				if($sessionAdmin->isLogin()) {
+					$tHead = '<div class="'.$className.'" brick-id="'.$this->getBrickId().'" ext-name="'.$this->getExtName().'" >';
+				} else {
+					$tHead = '<div class="'.$className.'">';
+				}
+				$tTail = "</div>";
+				return $tHead.$templateHTML.$tTail;
 			} else {
 				return 'tpl not found with name '.$tplName;
 			}
-			
-			
-			
-			
-// 			try {
-// 				if(isset($systemTplList[$tplName])) {
-// 					return $this->view->render($systemTplList[$tplName]);
-// 				} else {
-// 					return $this->view->render($tplName);
-// 				}
-// 			} catch(Exception $e) {
-// 				return $e->getMessage()." critical error within brick id: ".$this->_brick->getId().'!!<br /><a href="#/admin/brick.ajax/edit/brick-id/'.$this->_brick->getId().'">reset parameters</a>';
-// 			}
     	}
     }
     

@@ -16,7 +16,7 @@ class Module
 	{
 		$sharedEvents = StaticEventManager::getInstance();
 		
-		$sharedEvents->attach('Cms\ApplicationController', 'dispatch', array($this, 'setTwig'), 100);
+		$sharedEvents->attach('Cms\ApplicationController', 'predispatch', array($this, 'setTwig'), 100);
 		$sharedEvents->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'onError'), 100);
 		
 		$sessionAdmin = new SessionAdmin();
@@ -53,6 +53,7 @@ class Module
 		foreach($twigConfig['filters'] as $filterName) {
 			$twigEnv->addFilter($filterName, new \Twig_Filter_Function('Cms\Twig\Filter::'.$filterName));
 		}
+		
 		foreach($twigConfig['functions'] as $functionName => $func) {
 			$twigEnv->addFunction(new \Twig_SimpleFunction($functionName, $func, array('is_safe' => array('html'))));
 		}

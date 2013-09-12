@@ -178,4 +178,16 @@ class Front
 			return $layoutDoc->alias;
 		}
 	}
+	
+	public function useLayoutTpl()
+	{
+		$layoutDoc = $this->getLayoutDoc();
+		return $layoutDoc->useTpl;
+	}
+	
+	public function getLayoutTpl()
+	{
+		$layoutDoc = $this->getLayoutDoc();
+		return $layoutDoc->tplFileContent;
+	}
 }

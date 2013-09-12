@@ -1,7 +1,7 @@
 <?php
 namespace Cms\Document\Brick;
 
-use Core\Document\TreeDocument;
+use Core\AbstractDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** 
@@ -16,53 +16,21 @@ class Template extends AbstractDocument
 	protected $id;
 
 	/** @ODM\Field(type="string") */
-	protected $label;
+	protected $extName;
 
 	/** @ODM\Field(type="string") */
-	protected $alias;
+	protected $sciptName;
 	
 	/** @ODM\Field(type="string") */
-	protected $layoutAlias;
-	
-	/** @ODM\Field(type="string") */
-	protected $description;
-	
-	/** @ODM\Field(type="hash") */
-	protected $bookIndex;
-	
-	protected function _getIndex()
-	{
-		return $this->bookIndex;
-	}
-	
-	protected function _getReadLeafCollection()
-	{
-		$dm = self::$objectManager;
-		$bookPages = $dm->getRepository('Cms\Document\Book\Page')->findByBookId($this->getId());
-		return $bookPages;
-	}
-	
-	public function getTrail($id)
-	{
-		if(is_null($this->_trail)) {
-			$this->_trail[0] = $this->getArrayCopy();
-			$index = $this->_getIndex();
-	
-			$this->_searchChildren($this->_trail, $id, $index, 0);
-			ksort($this->_trail);
-		}
-			
-		return $this->_trail;
-	}
+	protected $content;
 	
 	public function getArrayCopy()
 	{
 		return array(
 			'id' => $this->id,
-			'label' => $this->label,
-			'alias' => $this->alias,
-			'layoutAlias' => $this->layoutAlias,
-			'description' => $this->description
+			'extName' => $this->extName,
+			'sciptName' => $this->sciptName,
+			'content' => $this->content
 		);
 	}
 }

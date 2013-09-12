@@ -14,6 +14,13 @@ class TemplateMap implements Twig_ExistsLoaderInterface, Twig_LoaderInterface
      */
     protected $map = array();
 
+    protected $layoutFront;
+    
+    public function __construct($layoutFront)
+    {
+    	$this->layoutFront = $layoutFront;
+    }
+    
     /**
      * Add to the map.
      *
@@ -56,6 +63,9 @@ class TemplateMap implements Twig_ExistsLoaderInterface, Twig_LoaderInterface
      */
     public function getSource($name)
     {
+    	if($name == 'layout/layout' && $this->layoutFront->useLayoutTpl() == 1) {
+    		return $this->layoutFront->getLayoutTpl();
+    	}
         if (!$this->exists($name)) {
             throw new Twig_Error_Loader(sprintf(
                 'Unable to find template "%s" from template map',

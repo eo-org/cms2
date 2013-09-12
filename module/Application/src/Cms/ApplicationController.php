@@ -35,6 +35,8 @@ class ApplicationController implements
 	
 	public function dispatch(Request $request, Response $response = null)
 	{
+		$this->getEventManager()->trigger('predispatch', $this->getEvent());
+		
 		$lcm = $request->getQuery('local-css-mode');
 		if($lcm == 'activate') {
 			$sessionAdmin = new SessionAdmin();
