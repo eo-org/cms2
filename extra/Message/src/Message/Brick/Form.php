@@ -8,7 +8,7 @@ class Form extends AbstractExtension
 	public function prepare()
 	{
 		$dm = $this->documentManager();
-		$messageFormId = $this->param('messageFormId');
+		$messageFormId = $this->getParam('messageFormId');
 		
 		$messageForm = $dm->getRepository('Message\Document\MessageForm')->find($messageFormId);
 		
