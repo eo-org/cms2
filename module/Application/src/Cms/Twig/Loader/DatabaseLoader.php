@@ -15,8 +15,10 @@ class DatabaseLoader implements Twig_LoaderInterface
 
     public function getSource($name)
     {
-        $template = $this->dm->getRepository('Cms\Document\Brick\Template')->findOneById($name);
-
+        $template = $this->dm->getRepository('Ext\Document\Template')->findOneById($name);
+		if(is_null($template)) {
+			$template = $this->dm->getRepository('Ext\Document\Template')->findOneByScriptName($name);
+		}
         if(!is_null($template)) {
             return $template->getContent();
         }

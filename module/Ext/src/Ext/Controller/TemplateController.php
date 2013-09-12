@@ -77,7 +77,9 @@ class TemplateController extends AbstractActionController
     public function getTplContentAction()
     {
     	$tplName = $this->params()->fromPost('tplName');
-    	$fileLoader = \Ext\Twig\View::getFileLoader();
+    	$sm = $this->getServiceLocator();
+    	$env = $sm->get('Twig\Environment');
+    	$fileLoader = $env->getLoader();
     	$tplContent = $fileLoader->getSource($tplName);
     	return array('tplContent' => $tplContent);
     }

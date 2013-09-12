@@ -6,6 +6,11 @@ return array(
 			'messagerest-messageform'	=> 'MessageRest\Controller\MessageFormController',
 		),
 	),
+	'router' => array(
+		'routes' => array(
+			
+		)		
+	),
 	'view_manager' => array(
 		'template_map' => array(
 			'message-admin/index/index'		=> __DIR__ . '/../view/message-admin/index/index.phtml',
