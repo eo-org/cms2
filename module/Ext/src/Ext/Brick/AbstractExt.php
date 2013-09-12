@@ -164,6 +164,12 @@ abstract class AbstractExt
     		
 			$variables = $this->view->getVariables()->getArrayCopy();
 			
+			if(is_null($this->params)) {
+				$this->params = array();
+			}
+			if(is_null($variables)) {
+				$variables = array();
+			}
 			$values = array_merge($this->params, $variables, array(
 				'brickName'	=> $this->_brick->brickName,
 				'brickId'	=> $this->_brick->getId(),
