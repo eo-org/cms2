@@ -169,6 +169,10 @@ abstract class AbstractExt
 				'brickId'	=> $this->_brick->getId(),
 			));
 			
+			if(is_null($values)) {
+				$values = array();
+			}
+			
 			$twigEnv = $this->sm->get('Twig\Environment');
 			if($template = $twigEnv->loadTemplate($tplName)) {
 				$sessionAdmin = new Admin();
