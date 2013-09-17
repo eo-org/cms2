@@ -53,8 +53,7 @@ class CacheListener implements ListenerAggregateInterface
     	$sm = $e->getApplication()->getServiceManager();
     	$context = $sm->get('Cms\Layout\Front')->getContext();
     	$storage = StorageFactory::factory(array(
-    		'adapter' => 'Cms\Cache\Storage\Adapter\Mongo',
-    		'options' => new MongoOptions()
+    		'adapter' => 'Cms\Cache\Storage\Adapter\Mongo'
     	));
     	$dm = $sm->get('DocumentManager');
     	$storage->setDocumentManager($dm);

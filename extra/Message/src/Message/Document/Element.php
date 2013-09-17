@@ -85,19 +85,19 @@ class Element extends AbstractDocument
 				case 'select':
 					$HTML.= "<select id='messageform-element-$this->id' name='elements[$this->id]'>";
 					foreach($this->options as $op) {
-						$HTML.= "<option value='".$op['code']."'>".$op['label']."</option>";
+						$HTML.= "<option value='".$op['label']."'>".$op['label']."</option>";
 					}
 					$HTML.= "</select>";
 					break;
 				case 'multicheckbox':
 					foreach($this->getOptions() as $op) {
-						$HTML.= "<input id='".$op['code']."' type='checkbox' name='elements[$this->id]' value='".$op['code']."' />";
+						$HTML.= "<input id='".$op['code']."' type='checkbox' name='elements[$this->id][]' value='".$op['label']."' />";
 						$HTML.= "<label for='".$op['code']."'>".$op['label']."</label>";
 					}
 					break;
 				case 'radio':
 					foreach($this->getOptions() as $op) {
-						$HTML.= "<input id='".$op['code']."' type='radio' name='elements[$this->id]' value='".$op['code']."' />";
+						$HTML.= "<input id='".$op['code']."' type='radio' name='elements[$this->id]' value='".$op['label']."' />";
 						$HTML.= "<label for='".$op['code']."'>".$op['label']."</label>";
 					}
 					break;

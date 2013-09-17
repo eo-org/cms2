@@ -2,7 +2,7 @@
 return array(
 	'controllers' => array(
         'invokables' => array(
-            'Application\Controller' => 'Cms\ApplicationController',
+            'Cms\ApplicationController' => 'Cms\ApplicationController',
         	'Application\Controller\Error' => 'Application\Controller\ErrorController',
         ),
     ),
@@ -28,60 +28,12 @@ return array(
         			),
         		),
         	),
-        	'extra' => array(
-        		'type' => 'literal',
-       			'options' => array(
-					'route' => '/admin',
-						'defaults' => array(
-        					'controller' => 'index',
-        					'action' =>'index',
-        				)
-        		),
-        		'may_terminate' => true,
-        		'child_routes' => array(
-        			'formatroutes' => array(
-        								'type' => 'segment',
-        								'options' => array(
-        										'route' => '[/:controller[.:format]][/:action]',
-        										'constraints' => array(
-        												'controller' => '[a-z-]*',
-        												'format' => '(ajax|bone)',
-        												'action' => '[a-z-]*'
-        										),
-        								),
-        								'child_routes' => array(
-        										'wildcard' => array(
-        												'type' => 'wildcard',
-        										),
-        								),
-        						),
-        						'actionroutes' => array(
-        								'type' => 'segment',
-        								'options' => array(
-        										'route' => '[/:controller][/:action]',
-        										'constraints' => array(
-        												'controller' => '[a-z-]*',
-        												'action' => '[a-z-]*'
-        										),
-        										'defaults' => array(
-        												'action' => 'index'
-        										)
-        								),
-        								'child_routes' => array(
-        										'wildcard' => array(
-        												'type' => 'wildcard',
-        										),
-        								),
-        						),
-        		
-        				)
-        	),
             'application' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller'    => 'Application\Controller',
+                        'controller'    => 'Cms\ApplicationController',
                         'action'        => 'index',
                     ),
                 ),
@@ -166,7 +118,7 @@ return array(
         		'options' => array(
         			'route'    => '/error-[:id].shtml',
         			'defaults' => array(
-        				'controller'    => 'Application\Controller',
+        				'controller'    => 'Cms\ApplicationController',
         				'action'        => 'index',
         			),
         			'constraints' => array(

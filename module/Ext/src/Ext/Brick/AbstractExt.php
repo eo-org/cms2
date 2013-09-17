@@ -19,7 +19,8 @@ abstract class AbstractExt
 	
     protected $disableRender = false;
     
-    protected $effectFiles = null;
+    //used by subclasses to record effect files
+    protected $_effectFiles = null;
 
     protected $view;
     
@@ -116,7 +117,7 @@ abstract class AbstractExt
     
     public function getEffectFiles()
     {
-    	return $this->effectFiles;
+    	return $this->_effectFiles;
     }
     
 	public function getParam($key, $defaultValue = NULL)

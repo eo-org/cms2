@@ -1,56 +1,38 @@
 <?php
 namespace Message\Controller;
 
-use Zend\Mvc\Controller\AbstractRestfulController;
-use Zend\View\Model\JsonModel;
-use Disqus\Document\Thread,
-Disqus\Document\Post;
+use Zend\Mvc\Controller\AbstractActionController;
+use Message\Document\Post;
 
-class IndexController extends AbstractRestfulController
+class IndexController extends AbstractActionController
 {
-	public function getList()
+	public function index()
 	{
 		
 	}
 	
-	public function get($id)
+	public function createAction()
 	{
-	
-	}
-	
-	public function create($data)
-	{
-		$dm = $this->documentManager();
-		$resourceId = $data['resourceId'];
-		$threadDoc = $dm->getRepository('Disqus\Document\Thread')->findOneBy(array('resourceId' => $resourceId));
-		if($threadDoc == null) {
-			$threadDoc = new Thread();
-			$threadDoc->setTopic($data['topic']);
-			$threadDoc->setResourceId($data['resourceId']);
+		if($this->getRequest()->isPost()) {
+			$postData = $this->getRequest()->getPost();
+			$formId = $postData['formId'];
+			$elementVals = $postData['elements'];
 			
-			$dm->persist($threadDoc);
+			$dm = $this->documentManager();
+			$messageForm = $dm->getRepository('Message\Document\MessageForm')->findOneById($formId);
+			if(is_null($messageForm)) {
+				throw new \Exception('message form document not found with given id '.$formId);
+			}
+			
+			$postContent = $messageForm->buildPostArr($elementVals);
+			
+			$postDoc = new Post();
+			$postDoc->exchangeArray($postContent);
+			
+			$dm->persist($postDoc);
 			$dm->flush();
+			
+			return $this->redirect()->toRoute('message');
 		}
-		$threadId = $threadDoc->getId();
-		$postDoc = new Post();
-		$postDoc->setFromArray($data);
-		$postDoc->setThreadId($threadId);
-		$postDoc->setCreated(new \MongoDate());
-		
-		$dm->persist($postDoc);
-		$dm->flush();
-		
-		$this->getResponse()->getHeaders()->addHeaderLine('result', 'sucess');
-		return new JsonModel($postDoc->toArray());
-	}
-	
-	public function update($id, $data)
-	{
-	
-	}
-	
-	public function delete($id)
-	{
-		
 	}
 }

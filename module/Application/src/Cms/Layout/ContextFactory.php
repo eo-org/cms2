@@ -20,12 +20,17 @@ class ContextFactory
 	
 	public function getContext($mvcEvent)
 	{
+		
+		
 		$routeMatch = $mvcEvent->getRouteMatch();
 		$routeName = $routeMatch->getMatchedRouteName();
 		$id = $routeMatch->getParam('id');
 		$presetLayoutDoc = null;
 		$factory = $this->sm->get('Core\Mongo\Factory');
 		$documentManager = $this->sm->get('DocumentManager');
+		
+		$layoutContextClass = $routeMatch->getParam('layout-context');
+		
 		
 		if($routeName == 'application/layout') {
 			$layoutCo = $factory->_m('Layout');

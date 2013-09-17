@@ -71,7 +71,7 @@ class MessageForm extends AbstractDocument
 	}
 	
 	public function exchangeArray($data)
-	{	
+	{
 		$elementDocs = array();
 		$elementsArr = $data['elements'];
 		
@@ -119,6 +119,31 @@ class MessageForm extends AbstractDocument
 			'confirmationEmail'			=> $this->confirmationEmail,
 			'created'					=> $this->created,
 			'modified'					=> $this->modified,
+		);
+	}
+	
+	public function buildPostArr($postData)
+	{
+		$postContent = array();
+		foreach($postData as $elKey => $pd) {
+			$targetEl = null;
+			foreach($this->elements as $element) {
+				if($elKey == $element->getId()) {
+					$targetEl = $element;
+				}
+			}
+			
+			if(!is_null($targetEl)) {
+				$postContent[$elKey] = array(
+					'fieldLabel' => $targetEl->getLabel(),
+					'fieldType' => $targetEl->getType(),
+					'optVal' => $pd
+				);
+			}
+		}
+		return array(
+			'formId' => $this->getId(),
+			'postContent' => $postContent
 		);
 	}
 	

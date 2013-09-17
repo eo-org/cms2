@@ -1,4 +1,5 @@
-<form class='messageform' method='POST' action='/extra/messageform'>
+<form class='messageform' method='POST' action='/message/create'>
+{{ printHiddenInfo(messageForm) }}
 <ul>
 {{ printElements(messageForm) }}
 </ul>

@@ -1,45 +1,79 @@
 <?php
-return array(
-	'controllers' => array(
-		'invokables' => array(
-			'messageadmin-index'		=> 'MessageAdmin\Controller\IndexController',
-			'messagerest-messageform'	=> 'MessageRest\Controller\MessageFormController',
-		),
+return array (
+	'controllers' => array (
+		'invokables' => array (
+			'Message\PostController' => 'Message\Controller\PostController',
+			'messageadmin-index' => 'MessageAdmin\Controller\IndexController',
+			'messagerest-messageform' => 'MessageRest\Controller\MessageFormController'
+		) 
 	),
-	'router' => array(
-		'routes' => array(
-			
-		)		
-	),
-	'view_manager' => array(
-		'template_map' => array(
-			'message-admin/index/index'		=> __DIR__ . '/../view/message-admin/index/index.phtml',
-			'message-admin/index/edit'	=> __DIR__ . '/../view/message-admin/index/edit.phtml',
-		)
-	),
-	'brick' => array(
-		'message' => array(
-			'label' => '表单信息',
-			'ext' => array( 
-				'Message_Brick_Form' => array(
-					'label' => '信息表单',
-					'desc' => ''
+	'router' => array (
+		'routes' => array (
+			'message' => array (
+				'type' => 'literal',
+				'options' => array (
+					'route' => '/message',
+					'defaults' => array (
+						'layout-context' => 'Message\Context\Message',
+						'controller' => 'Cms\ApplicationController',
+						'action' => 'index'
+					)
+				),
+				'may_terminate' => true,
+				'child_routes' => array (
+					'create' => array (
+						'type' => 'segment',
+						'options' => array (
+							'route' => '/create[.:format]',
+							'defaults' => array (
+								'format' => 'html',
+								'controller' => 'Message\PostControlle',
+								'action' => 'create'
+							)
+						),
+						'constraints' => array(
+							'format' => '(ajax|html)'
+						),
+						'may_terminate' => true,
+					)
 				)
 			)
-		)
+		) 
 	),
-	'brick_path_stack' => array(
-		__DIR__.'/../view/brick',
+	'view_manager' => array (
+		'template_map' => array (
+			'message-admin/index/index' => __DIR__ . '/../view/message-admin/index/index.phtml',
+			'message-admin/index/edit' => __DIR__ . '/../view/message-admin/index/edit.phtml' 
+		) 
 	),
-	'admin_toolbar' => array(
-		'navifefe' => array(
+	'brick' => array (
+		'message' => array (
+			'label' => '表单信息',
+			'ext' => array (
+				'Message_Brick_Form' => array (
+					'label' => '信息表单',
+					'desc' => '' 
+				) 
+			) 
+		) 
+	),
+	'brick_path_stack' => array (
+		__DIR__ . '/../view/brick' 
+	),
+	'admin_toolbar' => array (
+		'navifefe' => array (
 			'title' => 'MESSAGE',
-			'url' => '/admin/messageadmin-index/',
-		),
+			'url' => '/admin/messageadmin-index/' 
+		) 
 	),
-	'twig' => array(
-		'functions' => array(
-			'printElements' => function($messageForm) { return $messageForm->render(); }
-		)
-	)
+	'twig' => array (
+		'functions' => array (
+			'printElements' => function ($messageForm) {
+				return $messageForm->render ();
+			},
+			'printHiddenInfo' => function($messageForm) {
+				return "<input type='hidden' name='formId' value='".$messageForm->getId()."' />";
+			}
+		) 
+	) 
 );

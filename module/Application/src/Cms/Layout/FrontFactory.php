@@ -15,6 +15,8 @@ class FrontFactory implements FactoryInterface
 		$context = $contextFactory->getContext($mvcEvent);
 		if(!is_null($context)) {
 			$layoutFront->setContext($context);
+		} else {
+			throw new \Exception('context not found!');
 		}
 		return $layoutFront;
 	}
