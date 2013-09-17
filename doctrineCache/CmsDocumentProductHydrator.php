@@ -171,12 +171,44 @@ class CmsDocumentProductHydrator implements HydratorInterface
             $hydratedData['modified'] = $return;
         }
 
+        /** @Field(type="string") */
+        if (isset($data['modifiedBy'])) {
+            $value = $data['modifiedBy'];
+            $return = (string) $value;
+            $this->class->reflFields['modifiedBy']->setValue($document, $return);
+            $hydratedData['modifiedBy'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['modifiedByAlias'])) {
+            $value = $data['modifiedByAlias'];
+            $return = (string) $value;
+            $this->class->reflFields['modifiedByAlias']->setValue($document, $return);
+            $hydratedData['modifiedByAlias'] = $return;
+        }
+
         /** @Field(type="date") */
         if (isset($data['created'])) {
             $value = $data['created'];
             if ($value instanceof \MongoDate) { $date = new \DateTime(); $date->setTimestamp($value->sec); $return = $date; } else { $return = new \DateTime($value); }
             $this->class->reflFields['created']->setValue($document, clone $return);
             $hydratedData['created'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['createdBy'])) {
+            $value = $data['createdBy'];
+            $return = (string) $value;
+            $this->class->reflFields['createdBy']->setValue($document, $return);
+            $hydratedData['createdBy'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['createdByAlias'])) {
+            $value = $data['createdByAlias'];
+            $return = (string) $value;
+            $this->class->reflFields['createdByAlias']->setValue($document, $return);
+            $hydratedData['createdByAlias'] = $return;
         }
         return $hydratedData;
     }
