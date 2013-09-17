@@ -50,6 +50,9 @@ class Book extends ContextAbstract
 			
 			$this->bookPageDoc = $qb->getQuery()
 				->getSingleResult();
+			if(is_null($this->bookPageDoc)) {
+				throw new Cms\Exception\PageNotFoundException('book page not found with given id or alias: '.$pageId);
+			}
 			$pageId = $this->bookPageDoc->getId();
 			$this->trail = $bookDoc->getTrail($pageId);
 		}

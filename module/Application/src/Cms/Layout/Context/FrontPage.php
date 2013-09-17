@@ -37,7 +37,7 @@ class FrontPage extends ContextAbstract
 					->addFilter('alias', $id)
 					->fetchOne();
 				if($layoutDoc == null) {
-					throw new Exception('layout not found with alias : '.$id);
+					throw new \Exception('layout not found with alias : '.$id);
 				}
 			}
 		} else {
