@@ -24,7 +24,7 @@ return array (
 					'create' => array (
 						'type' => 'segment',
 						'options' => array (
-							'route' => '/create[.:format]',
+							'route' => '/create[.:format].shtml',
 							'defaults' => array (
 								'format' => 'html',
 								'controller' => 'Message\PostControlle',
